@@ -22,7 +22,12 @@ body {
 }
 
 a {
-    text-decoration: none
+    text-decoration: none;
+    color: rgb(33, 37, 41);
+    
+    // &:hover {
+    //     color: rgb(33, 37, 41) !important;
+    // }
 }
 
 main {
@@ -85,6 +90,16 @@ input, button {
     &:active {
         box-shadow: inset 1px 1px 2px $color-shadow, inset -1px -1px 2px $color-white;
     }
+}
+
+.btn-blue {
+    background: $color-blue;
+    color: $color-white;
+}
+
+.shadow-text {
+    color: $color-shadow;
+    text-shadow: 1px 1px 1px $color-white;
 }
 
 .btn-less-deep {

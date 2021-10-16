@@ -4,7 +4,6 @@
     width: 57px;
     height: 100vh;
     background-color: $color-dark;
-    // padding: .5rem 1rem 0 0;
     transition: .5s;
     z-index: 100;
     box-shadow: inset 20px 20px 60px #222327,
@@ -80,4 +79,14 @@
 .sidebar__nav-link:active {
     box-shadow:  inset 1px 1px 2px #000, inset 1px 1px 2px #2e2f35;
     color: $color-white;
+}
+
+@media only screen and (max-width: 956px) {
+    .sidebar__container {
+        width: 0;
+    }
+
+    .sidebar__nav-link.logout {
+        margin-bottom: 100px;
+    }
 }

@@ -36,7 +36,7 @@ export const Sidebar = () => {
                     </div>
                 </div>
 
-                <a href="!#" className="sidebar__nav-link">
+                <a href="!#" className="sidebar__nav-link logout">
                     <i className='fas fa-sign-out-alt'></i>
                     <span className={!open ? 'hide' : ''}>Cerrar Sesión</span>
                 </a>

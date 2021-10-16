@@ -1,0 +1,190 @@
+.dashboard__container {
+    min-height: 100vh;
+    background: $color-bg;
+}
+
+.dashboard__boxes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 0 50px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.dashboard__box {
+    border-radius: 0.5rem;
+    box-shadow: -5px -5px 10px $color-white, 5px 5px 10px $color-shadow;
+    display: block;
+    margin-bottom: 20px;
+    position: relative;
+    transition: .3s;
+
+    &:hover {
+        box-shadow: -2px -2px 5px $color-white, 2px 2px 5px $color-shadow;
+        color: rgb(33, 37, 41);
+    }
+
+    &:active {
+        box-shadow: inset -5px -5px 10px $color-white, inset 5px 5px 10px $color-shadow;
+    }
+}
+
+.dashboard__box>.dashboard__box-main {
+    padding: 10px;
+}
+
+.dashboard__box>.dashboard__box-footer {
+    color: rgba(255, 255, 255, 0.8);
+    display: block;
+    padding: 3px 0;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    z-index: 10;
+    border-radius: 0 0 0.5rem 0.5rem;
+    background: $color-shadow;
+}
+
+.dashboard__box.projects>.dashboard__box-footer {
+    background: $color-blue;
+}
+.dashboard__box.total>.dashboard__box-footer {
+    background: $color-green;
+}
+.dashboard__box.paid>.dashboard__box-footer {
+    background: $color-light-green;
+}
+.dashboard__box.remaining>.dashboard__box-footer {
+    background: $color-red;
+}
+
+.dashboard__box h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 10px;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.dashboard__box p {
+    font-size: 1rem;
+}
+
+.dashboard__box p>small {
+    color: #f8f9fa;
+    display: block;
+    font-size: .9rem;
+    margin-top: 5px;
+}
+
+.dashboard__box h3,
+.dashboard__box p {
+    z-index: 5;
+}
+
+.dashboard__box .dashboard__box-icon {
+    color: rgba(0, 0, 0, 0.15);
+    z-index: 0;
+}
+
+.dashboard__box .dashboard__box-icon>i {
+    font-size: 90px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    transition: -webkit-transform 0.3s linear;
+    transition: transform 0.3s linear;
+    transition: transform 0.3s linear, -webkit-transform 0.3s linear;
+}
+
+.dashboard__box.add-project {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 5px 5px 10px $color-shadow, inset -5px -5px 10px $color-white;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: inset 5px 2px 5px $color-shadow, inset -2px -2px 5px $color-white;
+    }
+
+    &:active {
+        box-shadow: 5px 2px 5px $color-shadow, -2px -2px 5px $color-white;
+    }
+}
+
+.dashboard__box.add-project .dashboard__box-icon>i {
+    font-size: 90px;
+    display: flex;
+    position: initial;
+}
+
+// Project Boxes
+
+.project-boxes__container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 0 50px;
+}
+
+.project__box {
+    text-align: center;
+}
+
+.projects__btn-container {
+    width: 100%;
+    text-align: right;
+}
+
+.projects__btn {
+    width: auto;
+    box-shadow: -5px -5px 10px $color-white, 5px 5px 10px $color-shadow;
+}
+
+.projects__btn i {
+    font-size: 16px;
+}
+
+@media only screen and (max-width: 1500px) {
+    .project-boxes__container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 0 20px;
+    }
+
+    .dashboard__boxes {
+        grid-gap: 0 10px;
+    }
+}
+
+
+@media only screen and (max-width: 1100px) {
+    .project-boxes__container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .dashboard__boxes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 756px) {
+    .project-boxes__container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media only screen and (max-width: 600px) {
+    .dashboard__boxes {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+
+@media only screen and (max-width: 480px) {
+    .project-boxes__container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

@@ -90,3 +90,9 @@ input.auth__input {
     margin-bottom: 10px;
     display: inline-block;
 }
+
+@media only screen and (max-width: 680px) {
+    .auth__box {
+        padding: 50px 20px;
+    }
+}

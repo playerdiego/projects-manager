@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from 'react-router'
 import { BalanceScreen } from '../components/balance/BalanceScreen'
 import { DashboardScreen } from '../components/dashboard/DashboardScreen'
 import { ProjectsScreen } from '../components/projects/ProjectsScreen'
+import { Footer } from '../components/ui/Footer'
 import { Header } from '../components/ui/Header'
 import { Sidebar } from '../components/ui/Sidebar'
 
@@ -24,6 +25,7 @@ export const DashboradRouter = () => {
                     <Redirect to='/' />
                 </Switch>
             </div>
+            <Footer />
         </div>            
     )
 }
