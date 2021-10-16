@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { ManagerApp } from './ManagerApp.jsx';
 import reportWebVitals from './reportWebVitals';
+import './styles/styles.scss';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ManagerApp />
   </React.StrictMode>,
   document.getElementById('root')
 );

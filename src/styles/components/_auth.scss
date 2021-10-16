@@ -1,0 +1,92 @@
+.auth__container {
+    background-image: url('../../assets/auth_bg.jpg');
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth__box {
+    background-color: $color-bg;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: inset 2px 2px 5px $color-shadow, inset -5px -5px 10px $color-white;
+    max-width: 600px;
+}
+
+.auth__box-title,
+.auth__box-subtitle, 
+.auth__link {
+    color: $color-shadow;
+    text-shadow: 1px 1px 1px $color-white;
+}
+
+.auth__box-subtitle {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+input.auth__input {
+    box-shadow: inset 2px 2px 5px $color-shadow, inset -5px -5px 10px $color-white;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+    appearance: none;
+    -webkit-appearance: none;
+
+    &:focus {
+        box-shadow: inset 1px 1px 2px $color-shadow, inset -1px -1px 2px $color-white;
+    }
+}
+
+.auth__login-button {
+    background-color: $color-blue;
+    box-shadow: -5px -5px 20px lighten($color: $color-shadow, $amount: 20) , 5px 5px 20px $color-shadow;
+    text-shadow: none;
+    color: #fff;
+
+    &:hover {
+        color: #fff;
+    }
+
+    &:active {
+        box-shadow: inset 5px 5px 20px darken($color: $color-shadow, $amount: 30) , inset -1px -1px 2px $color-shadow;
+    }
+}
+
+.auth__social-login {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+
+    .google {
+        color: #DB4437;
+    }
+
+    .facebook {
+        color: #4267B2;
+    }
+
+    .twitter {
+        color: #1DA1F2;
+    }
+}
+
+.auth__social-login button {
+    border-radius: 8px;
+    margin: 0 20px;
+}
+
+.auth__link {
+    text-align: center;
+    display: block;
+    color: darken($color: $color-shadow, $amount: 20);
+    font-weight: bolder;
+    text-shadow: 1px 1px 1px $color-white;
+    margin: 10px 0;
+}
+
+.auth__button-back {
+    margin-bottom: 10px;
+    display: inline-block;
+}
