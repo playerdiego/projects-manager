@@ -126,11 +126,26 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 0 50px;
+    margin-bottom: 40px;
 }
 
 .project__box {
     text-align: center;
 }
+
+.project__box p {
+    font-weight: bolder;
+}
+
+.project__box.closed {
+    opacity: 0.4;
+    box-shadow: -1px -1px 5px $color-white, 1px 2px 3px $color-shadow;
+}
+
+.project__box.closed p {
+    color:rgb(33, 37, 41);
+}
+
 
 .projects__btn-container {
     width: 100%;

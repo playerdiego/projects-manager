@@ -4,6 +4,7 @@
     background: darken($color: $color-white, $amount: 20);
     padding: 20px;
     width: 100%;
+    box-shadow: inset 5px 5px 10px $color-shadow, inset -5px -5px 10px $color-white;
 }
 
 @media only screen and (max-width: 956px) {

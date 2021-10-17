@@ -1,47 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { closeSidebar } from '../../actions/uiActions';
+import { projects } from '../../data/projects';
 import Boxes from './Boxes';
 import { ProjectBox } from './ProjectBox';
 
 export const DashboardScreen = () => {
 
-    const projects = [
-        {
-            title: 'Proyecto 1',
-            tasks: 5,
-            budget: 100,
-            paid: 50,
-            id: 1
-        },
-        {
-            title: 'Proyecto 2',
-            tasks: 5,
-            budget: 100,
-            paid: 50,
-            id: 2
-        },
-        {
-            title: 'Proyecto 3',
-            tasks: 5,
-            budget: 100,
-            paid: 50,
-            id: 3
-        },
-        {
-            title: 'Proyecto 4',
-            tasks: 5,
-            budget: 100,
-            paid: 50,
-            id: 4
-        },
-        {
-            title: 'Proyecto 5',
-            tasks: 5,
-            budget: 100,
-            paid: 50,
-            id: 5
-        },
-    ]
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(closeSidebar());
+    }, [dispatch]);
 
     return (
         <>

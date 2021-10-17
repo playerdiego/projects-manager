@@ -1,0 +1,86 @@
+.balance__table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    box-shadow: -5px -5px 10px $color-white, 5px 5px 10px $color-shadow;
+}
+
+.balance__table th,
+.balance__table td {
+    padding: 1rem;
+    vertical-align: top;
+    box-shadow: inset -5px -5px 10px darken($color: $color-white, $amount: 20), inset 5px 5px 10px $color-shadow;
+}
+
+.balance__table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid $color-shadow;
+}
+
+.balance__table,
+.balance__table th,
+.balance__table td {
+    border: 1px solid $color-shadow;
+    transition: .3s;
+}
+
+.balance__table td {
+    cursor: pointer;
+}
+
+.balance__table tr:hover td {
+    box-shadow: inset -2px -2px 5px $color-white, inset 2px 2px 5px $color-shadow;
+    background: #fff;
+}
+
+.balance__table tr:active td {
+    box-shadow: -2px -2px 5px $color-shadow, 2px 2px 5px $color-shadow;
+}
+
+.balance__table-total-row {
+    background: #fff;
+}
+
+.balance__table-total-row td {
+    cursor: default;
+    box-shadow: inset -2px -2px 5px $color-white, inset 2px 2px 5px $color-shadow;
+}
+
+.balance__table thead th,
+.balance__table thead td {
+    border-bottom-width: 2px;
+}
+
+.balance__table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+th.balance__table-project {
+    background: $color-shadow;
+    box-shadow: inset -5px -5px 10px darken($color: $color-shadow, $amount: 10), inset 5px 5px 10px darken($color: $color-shadow, $amount: 20);
+    color: #fff;
+}
+
+th.balance__table-tasks {
+    background: $color-blue;
+    box-shadow: inset -5px -5px 10px darken($color: $color-blue, $amount: 10), inset 5px 5px 10px darken($color: $color-blue, $amount: 20);
+    color: #fff;
+}
+
+th.balance__table-paid {
+    background: $color-light-green;
+    box-shadow: inset -5px -5px 10px darken($color: $color-light-green, $amount: 10), inset 5px 5px 10px darken($color: $color-light-green, $amount: 20);
+    color: #fff;
+}
+
+th.balance__table-remaining {
+    background: $color-red;
+    box-shadow: inset -5px -5px 10px darken($color: $color-red, $amount: 10), inset 5px 5px 10px darken($color: $color-red, $amount: 20);
+    color: #fff;
+}
+
+th.balance__table-total {
+    background: $color-green;
+    box-shadow: inset -5px -5px 10px darken($color: $color-green, $amount: 10), inset 5px 5px 10px darken($color: $color-green, $amount: 20);
+    color: #fff;
+}

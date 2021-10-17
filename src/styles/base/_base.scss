@@ -53,6 +53,19 @@ main {
     cursor: pointer;
 }
 
+.color-blue {
+    color: $color-blue;
+}
+.color-green {
+    color: $color-green;
+}
+.color-light-green {
+    color: $color-light-green;
+}
+.color-red {
+    color: $color-red;
+}
+
 input, button {
     border: 0;
     outline: 0;
