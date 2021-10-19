@@ -1,5 +1,6 @@
 .balance__table {
     width: 100%;
+    min-width: 500px;
     margin-bottom: 1rem;
     color: #212529;
     box-shadow: -5px -5px 10px $color-white, 5px 5px 10px $color-shadow;
@@ -51,7 +52,7 @@
     border-bottom-width: 2px;
 }
 
-.balance__table tbody + tbody {
+.balance__table tbody+tbody {
     border-top: 2px solid #dee2e6;
 }
 
@@ -83,4 +84,16 @@ th.balance__table-total {
     background: $color-green;
     box-shadow: inset -5px -5px 10px darken($color: $color-green, $amount: 10), inset 5px 5px 10px darken($color: $color-green, $amount: 20);
     color: #fff;
+}
+
+@media only screen and (max-width: 992px) {
+    .balance__container {
+        overflow-x: scroll;
+    }
+
+    .balance__table,
+    .balance__table th,
+    .balance__table td {
+        font-size: 12px;
+    }
 }
