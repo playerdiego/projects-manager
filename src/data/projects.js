@@ -3,7 +3,7 @@ export const projects = [
         name: 'Proyecto 1',
         tasks: 5,
         budget: 1000,
-        paid: 50,
+        paid: 80,
         id: 1
     },
     {

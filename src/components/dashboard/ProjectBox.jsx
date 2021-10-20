@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const ProjectBox = ({name, tasks, budget, paid, closed}) => {
+export const ProjectBox = ({name, tasks, budget, paid, closed, id}) => {
     return (
-        <Link to='/' className={closed ? 'dashboard__box project__box closed' : 'dashboard__box project__box'}>
+        <Link to={`/project/${id}`} className={closed ? 'dashboard__box project__box closed' : 'dashboard__box project__box'}>
             <div className="dashboard__box-main">
                 <h3>{name}</h3>
 

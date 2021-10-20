@@ -1,0 +1,120 @@
+.project__header {
+    display: flex;
+    align-items: center;
+}
+
+.project__header h1 {
+    margin: 0;
+}
+
+.project__back {
+    display: inline-block;
+    width: auto;
+    margin-right: 20px;
+    margin-bottom: 0;
+}
+
+.project__budget, input.project__input-budget {
+    background: $color-green;
+    color: $color-white;
+    padding: 5px 20px;
+    margin-left: 30px;
+    font-weight: bolder;
+    border-radius: 10px;
+    box-shadow: inset 2px 2px 5px darken($color: $color-green, $amount: 20), inset -5px -5px 10px darken($color: $color-green, $amount: 10);
+    position: relative;
+}
+
+.project__percentage {
+    margin-left: 20px;
+    box-shadow: 2px 2px 5px $color-shadow, -5px -5px 10px $color-white;
+    padding: 5px 20px;
+    border: 0px;
+    border-radius: 10px;
+    background: transparent;
+    font-weight: bolder;
+}
+
+.project__percentage option {
+    box-shadow: 2px 2px 5px $color-shadow, -5px -5px 10px $color-white;
+}
+
+.project__edit {
+    font-size: 16px;
+    position: absolute;
+    cursor: pointer;
+    opacity: 0;
+    transition: .3s;
+}
+
+.project__budget .project__edit {
+    top: -20px;
+    right: -10px;
+    color: $color-shadow;
+}
+
+.project__header h1:hover .project__edit, .project__header .project__budget:hover .project__edit  {
+    opacity: 1;
+}
+
+.project__title-form {
+    display: grid;
+    grid-template-columns: 85% 15%;
+    min-width: 400px;
+    grid-gap: 10px;
+}
+
+.project__form-btn {
+    box-shadow: 2px 2px 5px $color-shadow, -5px -5px 10px $color-white;
+    padding: 10px;
+    margin: 0;
+    display: inline-block;
+    transition: .5s;
+    width: auto;
+
+    &:hover {
+        box-shadow: 1px 1px 2px $color-shadow, -2px -2px 5px $color-white;
+    }
+    
+    &:active {
+        box-shadow: inset 1px 1px 2px $color-shadow, inset -2px -2px 5px $color-white;
+
+    }
+}
+
+.project__input {
+    margin: 0;
+}
+
+.project__budget-form {
+    max-width: 180px;
+    margin-left: 30px;
+    display: flex;
+}
+
+input.project__input-budget {
+    margin-left: 0;
+    max-width: 120px;
+    position: relative;
+    text-shadow: none;
+}
+
+.project__budget-form .project__form-btn {
+    height: 35px;
+    width: 35px;
+    display: flex;
+}
+
+.project__main {
+    margin-top: 50px;
+}
+
+.project__header-description {
+    margin-left: 30px;
+}
+
+.project__header-description p {
+    display: inline;
+    margin: auto 10px;
+    font-weight: bolder;
+}
