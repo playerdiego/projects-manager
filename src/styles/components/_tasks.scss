@@ -1,0 +1,138 @@
+// Box
+.tasks__container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+}
+
+.task__box {
+    display: grid;
+    grid-template-columns: 10% 90%;
+    margin-bottom: 0;
+    &.completed {
+        opacity: .3;
+    }
+}
+
+.task__box h4 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.task__box-main {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    transition: .5s;
+
+    &:hover {
+        color: $color-shadow;
+    }
+}
+
+// Screen
+
+.task__header {
+    margin-bottom: 30px;
+
+    & h2 {
+        margin-bottom: 0;
+    }
+}
+
+.task__toggle {
+    display: flex;
+    justify-content: center;
+    border-radius: 8px 0 0 8px;
+    background: darken($color-shadow, 10);
+    color: $color-white;
+    align-items: center;
+}
+
+.task__breadcrumb {
+    margin-bottom: 20px;
+    font-weight: bolder;
+}
+
+.task__breadcrumb a {
+    color: darken($color-shadow, 10);
+}
+
+.task__btn {
+    margin-top: 20px;
+    box-shadow: -2px -2px 5px $color-white, 2px 2px 5px $color-shadow;
+
+    &:hover {
+        box-shadow: -1px -1px 2px $color-white, 1px 1px 2px $color-shadow;
+    }
+
+    &:active {
+        box-shadow: inset -1px -1px 2px $color-white, inset 1px 1px 2px $color-shadow;
+    }
+}
+
+.task__status {
+    margin-left: 30px;
+    margin-bottom: 0;
+    width: auto;
+    box-shadow: -2px -2px 5px $color-white, 2px 2px 5px $color-shadow;
+
+    &:hover {
+        box-shadow: -1px -1px 2px $color-white, 1px 1px 2px $color-shadow;
+    }
+
+    &:active {
+        box-shadow: inset -1px -1px 2px $color-white, inset 1px 1px 2px $color-shadow;
+    }
+
+    &.completed {
+        box-shadow: inset -1px -1px 2px $color-white, inset 1px 1px 2px $color-shadow;
+    }
+}
+
+.tox-tinymce {
+    box-shadow: -5px -5px 20px $color-white, 5px 5px 20px $color-shadow !important;
+}
+
+@media only screen and (max-width: 1180px) {
+    .tasks__container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .task__header {
+        display: flex !important;
+        flex-direction: column;
+        align-items: flex-start;
+
+        & h2 {
+            margin-bottom: 15px;
+        }
+    }
+
+    .task__status {
+        margin-left: 0;
+        padding: 5px 10px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .tasks__container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .task__header h2 {
+        font-size: 26px;
+    }
+}
+
+@media only screen and (max-width: 624px) {
+    .tasks__container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+.task__complete {
+    cursor: pointer;
+}

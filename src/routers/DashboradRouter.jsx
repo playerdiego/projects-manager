@@ -5,6 +5,7 @@ import { BalanceScreen } from '../components/balance/BalanceScreen'
 import { DashboardScreen } from '../components/dashboard/DashboardScreen'
 import { Project } from '../components/projects/Project'
 import { ProjectsScreen } from '../components/projects/ProjectsScreen'
+import { TaskScreen } from '../components/tasks/TaskScreen'
 import { Footer } from '../components/ui/Footer'
 import { Header } from '../components/ui/Header'
 import { Sidebar } from '../components/ui/Sidebar'
@@ -20,7 +21,8 @@ export const DashboradRouter = () => {
             <div className={open ? 'main__container open' : 'main__container'}>
                 <Switch>
                     <Route path='/projects' component={ProjectsScreen}  />
-                    <Route path='/project/:projectID' component={Project} />
+                    <Route exact path='/project/:projectID' component={Project} />
+                    <Route exact path='/project/:projectID/task/:taskID' component={TaskScreen} />
                     <Route path='/payments-balance' component={BalanceScreen}  />
                     <Route exact path='/' component={DashboardScreen}  />
 

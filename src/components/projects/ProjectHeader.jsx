@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 
-export const Header = ({project}) => {
+export const ProjectHeader = ({project}) => {
 
     const [editTitle, setEditTitle] = useState(false);
     const [editBudget, setEditBudget] = useState(false);
@@ -10,12 +10,6 @@ export const Header = ({project}) => {
     const [{name, budget, paid}, handleInputChange] = useForm({
         ...project
     });
-
-    const history = useHistory();
-
-    const handleBack = () => {
-        history.goBack();
-    }
 
     const handleUploadProject = (e) => {
         e.preventDefault();
@@ -28,13 +22,12 @@ export const Header = ({project}) => {
     return (
         <>
             <div className="project__header">
-                <button
+                <Link
                     className="btn btn-less-deep auth__button-back project__back"
-                    to='/auth/login'
-                    onClick={handleBack}
+                    to='/projects'
                 >
                     <i className="fas fa-arrow-left"></i>
-                </button>
+                </Link>
 
                 
 
@@ -117,11 +110,11 @@ export const Header = ({project}) => {
                     <option value="100">100%</option>
                 </select>
                 
-                <div className="project__header-description">
-                    <p className='color-blue'>Tareas: {project.tasks}</p>
-                    <p className='color-light-green'>Pagado: {paid}% ({budget * (paid / 100)}$)</p>
-                    <p className='color-red'>Por Pagar: {100 - paid}% ({budget * ((100 - paid) / 100)}$)</p>
-                </div>
+            </div>
+            <div className="project__header-description">
+                <p className='color-blue'>Tareas: {project.tasks}</p>
+                <p className='color-light-green'>Pagado: {paid}% ({budget * (paid / 100)}$)</p>
+                <p className='color-red'>Por Pagar: {100 - paid}% ({budget * ((100 - paid) / 100)}$)</p>
             </div>
 
         </>

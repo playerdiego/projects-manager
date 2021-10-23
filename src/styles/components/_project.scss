@@ -4,10 +4,17 @@
 }
 
 .project__header h1 {
+    grid-area: title;
     margin: 0;
 }
 
+.project__header-data {
+    display: flex;
+    align-items: center;
+}
+
 .project__back {
+    grid-area: back;
     display: inline-block;
     width: auto;
     margin-right: 20px;
@@ -15,6 +22,7 @@
 }
 
 .project__budget, input.project__input-budget {
+    grid-area: budget;
     background: $color-green;
     color: $color-white;
     padding: 5px 20px;
@@ -25,7 +33,12 @@
     position: relative;
 }
 
+.project__budget-form {
+    grid-area: budget;
+}
+
 .project__percentage {
+    grid-area: percentage;
     margin-left: 20px;
     box-shadow: 2px 2px 5px $color-shadow, -5px -5px 10px $color-white;
     padding: 5px 20px;
@@ -58,9 +71,9 @@
 }
 
 .project__title-form {
+    grid-area: title;
     display: grid;
     grid-template-columns: 85% 15%;
-    min-width: 400px;
     grid-gap: 10px;
 }
 
@@ -90,6 +103,7 @@
     max-width: 180px;
     margin-left: 30px;
     display: flex;
+    align-items: center;
 }
 
 input.project__input-budget {
@@ -106,15 +120,65 @@ input.project__input-budget {
 }
 
 .project__main {
-    margin-top: 50px;
+    margin-top: 20px;
+    margin-bottom: 40px;
 }
 
 .project__header-description {
-    margin-left: 30px;
+    margin-top: 30px;
 }
 
 .project__header-description p {
     display: inline;
-    margin: auto 10px;
+    margin-right: 20px;
     font-weight: bolder;
+}
+
+.project__tasks-completed {
+    margin-top: 50px;
+}
+
+@media only screen and(max-width: 600px) {
+    .project__header h1 {
+        font-size: 32px;
+    }
+
+}
+
+@media only screen and(max-width: 556px) {
+    .project__header {
+        display: grid;
+        grid-template-areas: "back back back back back"
+        "title title title title title"
+        "budget budget budget percentage percentage";
+    }
+    
+    .project__back {
+        margin-right: 10px;
+        padding: 5px;
+    
+        & i {
+            font-size: 16px;
+        }
+    }
+
+    .project__budget, input.project__input-budget {
+        margin-left: 0;
+    }
+
+    .project__header-description {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .project__header-description p {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+
+    .project__header h1, .project__title-form {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
 }
