@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { closeSidebar } from '../../actions/uiActions';
 import { projects, projectsClosed } from '../../data/projects';
-import { ProjectBox } from '../dashboard/ProjectBox';
+import { ProjectBox } from './ProjectBox';
+import { AddProjectBox } from './AddProjectBox';
 
 export const ProjectsScreen = () => {
 
@@ -22,14 +23,7 @@ export const ProjectsScreen = () => {
                 ? (
                     <div className="project-boxes__container">
 
-                        <div className="dashboard__box project__box add-project">
-                            <div className="dashboard__box-main">
-                                <h3 className='shadow-text'>Agregar Proyecto</h3>
-                            </div>
-                            <div className="dashboard__box-icon">
-                                <i className="fas fa-plus"></i>
-                            </div>
-                        </div>
+                    <AddProjectBox />
 
                         {
                             projects.map(project => (

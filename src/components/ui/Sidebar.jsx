@@ -36,10 +36,17 @@ export const Sidebar = () => {
                     </div>
                 </div>
 
-                <a href="!#" className="sidebar__nav-link logout">
-                    <i className='fas fa-sign-out-alt'></i>
-                    <span className={!open ? 'hide' : ''}>Cerrar Sesión</span>
-                </a>
+                <div>
+                    
+                    <Link to='/account' className="sidebar__nav-link logout">
+                        <i className='fas fa-user'></i>
+                        <span className={!open ? 'hide' : ''}>Mi Cuenta</span>
+                    </Link>
+                    <Link to='/auth' className="sidebar__nav-link logout">
+                        <i className='fas fa-sign-out-alt'></i>
+                        <span className={!open ? 'hide' : ''}>Cerrar Sesión</span>
+                    </Link>
+                </div>
             </nav>
         </div>
     )

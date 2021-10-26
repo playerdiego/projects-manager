@@ -75,7 +75,6 @@ input, button {
     background-color: $color-bg;
     text-shadow: 1px 1px 0 $color-white;
     width: 100%;
-    margin-bottom: 30px;
 }
 
 .btn {
@@ -131,4 +130,45 @@ input, button {
 
 .hidden {
     display: none;
+}
+
+input {
+    box-shadow: inset 2px 2px 5px $color-shadow, inset -5px -5px 10px $color-white;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 5px;
+
+    &:focus {
+        box-shadow: inset 1px 1px 2px $color-shadow, inset -1px -1px 2px $color-white;
+    }
+}
+
+.form__btn {
+    box-shadow: 2px 2px 5px $color-shadow, -5px -5px 10px $color-white;
+    padding: 10px;
+    margin: 0;
+    display: inline-block;
+    transition: .5s;
+    width: auto;
+    border-radius: 5px;
+
+    &:hover {
+        box-shadow: 1px 1px 2px $color-shadow, -2px -2px 5px $color-white;
+    }
+    
+    &:active {
+        box-shadow: inset 1px 1px 2px $color-shadow, inset -2px -2px 5px $color-white;
+
+    }
+}
+
+.form__buttons-container {
+    display: inline-flex;
+    z-index: 10000000;
+    
+    & button {
+        z-index: 10000000;
+    }
 }

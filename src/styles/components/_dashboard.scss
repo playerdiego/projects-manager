@@ -11,7 +11,7 @@
     margin-bottom: 50px;
 }
 
-.dashboard__box {
+.dashboard__box, .password__box {
     border-radius: 0.5rem;
     box-shadow: -5px -5px 10px $color-white, 5px 5px 10px $color-shadow;
     display: block;
@@ -29,7 +29,7 @@
     }
 }
 
-.dashboard__box>.dashboard__box-main {
+.dashboard__box>.dashboard__box-main, .password__box > .password__box-main {
     padding: 10px;
 }
 
@@ -82,12 +82,12 @@
     z-index: 5;
 }
 
-.dashboard__box .dashboard__box-icon {
+.dashboard__box .dashboard__box-icon, .password__box .password__box-icon {
     color: rgba(0, 0, 0, 0.15);
     z-index: 0;
 }
 
-.dashboard__box .dashboard__box-icon>i {
+.dashboard__box .dashboard__box-icon>i, .password__box > .password__box-icon>i {
     font-size: 90px;
     position: absolute;
     right: 15px;
@@ -124,7 +124,7 @@
 
 .project-boxes__container {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     grid-gap: 0 50px;
     margin-bottom: 40px;
 }
@@ -159,6 +159,23 @@
 
 .projects__btn i {
     font-size: 16px;
+}
+
+.project__type {
+    color: darken($color-shadow, 15);
+    font-weight: 400 !important;
+    font-size: 14px !important;
+}
+
+.project__add-form {
+    &:hover, &:active {
+        box-shadow: -5px -5px 10px #FFF, 5px 5px 10px #a2a5b1;
+    }
+}
+
+.project__add-form button {
+    box-shadow: -2px -2px 5px #FFF, 2px 2px 5px #a2a5b1;
+    padding: 15px;
 }
 
 @media only screen and (max-width: 1500px) {

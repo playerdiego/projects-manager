@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { closeSidebar, openSiderbar } from '../../actions/uiActions';
 
 export const Header = () => {
@@ -19,7 +20,7 @@ export const Header = () => {
             <div className="dashboard__header_toggle" onClick={handleToggle}> 
                 <i className={open ? 'fas fa-times' : 'fas fa-bars'} id="header-toggle"></i>
             </div>
-            <div className="dashboard__header_img"> <img src="https://i.imgur.com/hczKIze.jpg" alt="" /> </div>
+            <Link to='/account' className="dashboard__header_img"> <img src="https://i.imgur.com/hczKIze.jpg" alt="" /> </Link>
         </header>
     )
 }

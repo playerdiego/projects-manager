@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const ProjectBox = ({name, tasks, budget, paid, closed, id}) => {
+export const ProjectBox = ({name, tasks, budget, paid, closed, id, type}) => {
     return (
         <Link to={`/project/${id}`} className={closed ? 'dashboard__box project__box closed' : 'dashboard__box project__box'}>
             <div className="dashboard__box-main">
                 <h3>{name}</h3>
-
+                
                 <p className='color-blue'>Tareas: {tasks}</p>
                 <p className='color-green'>Presupuesto: {budget}$</p>
                 <p className='color-light-green'>Pagado: {paid}% ({budget * (paid / 100)}$)</p>

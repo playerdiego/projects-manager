@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
+import { Form } from '../ui/Form';
+import Swal from 'sweetalert2';
 
 export const ProjectHeader = ({project}) => {
 
     const [editTitle, setEditTitle] = useState(false);
     const [editBudget, setEditBudget] = useState(false);
     
-    const [{name, budget, paid}, handleInputChange] = useForm({
+    const [{name, budget, paid, passwords}, handleInputChange] = useForm({
         ...project
     });
 
@@ -16,6 +18,27 @@ export const ProjectHeader = ({project}) => {
 
         setEditTitle(false);
         setEditBudget(false);
+    }
+
+    const handleActivePasswords = (e) => {
+        Swal.fire({
+            title: passwords ? '¿Quieres eliminar el panel de contraseñas? ¡Se eliminarán todas!' : '¿Quieres añadir el panel de contraseñas?',
+            showDenyButton: true,
+            confirmButtonText: 'Si',
+            denyButtonText: `No`,
+          }).then((result) => {
+            if (result.isConfirmed) {
+
+                handleInputChange({
+                    target: {
+                        name: e.target.name,
+                        value: !passwords
+                    }
+                });
+
+                Swal.fire(passwords ? 'Se ha añadido el panel de contraseñas' : 'Se ha eliminado el panel de contraseñas', '', 'success');
+            }
+          })
     }
 
 
@@ -34,7 +57,7 @@ export const ProjectHeader = ({project}) => {
                 {
                     !editTitle 
                     ? (
-                        <h1 className='shadow-text main__title' onClick={() => setEditTitle(true)}>
+                        <h1 className='shadow-text main__title' onClick={() => !editTitle && !editBudget && setEditTitle(true)}>
                             {name}
                             <i
                                 className={`fas fa-pencil project__edit ${editTitle || editBudget ? 'hidden': ''}`}
@@ -43,20 +66,13 @@ export const ProjectHeader = ({project}) => {
                         </h1>
                     )
                     : (
-                        <form
+                        <Form
                             className='project__title-form'
-                            onSubmit={handleUploadProject}
-                        >
-                            <input
-                                className='auth__input project__input'
-                                type="text"
-                                name="name"
-                                id="name"
-                                onChange={handleInputChange}
-                                value={name}
-                            />
-                            <button className="project__form-btn"><i className='fas fa-check'></i></button>
-                        </form>
+                            handleSubmit={handleUploadProject}
+                            handleInputChange={handleInputChange}
+                            setter={setEditTitle}
+                            name='name'
+                            value={name} /> 
                     )
                 }
 
@@ -64,7 +80,7 @@ export const ProjectHeader = ({project}) => {
                     !editBudget
                     ? (
                         <>
-                        <div className="project__budget" onClick={() => setEditBudget(true)}>
+                        <div className="project__budget" onClick={() => !editTitle && !editBudget && setEditBudget(true)}>
                             {budget}$
                             <i
                                 className={`fas fa-pencil project__edit ${editTitle || editBudget ? 'hidden': ''}`}
@@ -74,20 +90,13 @@ export const ProjectHeader = ({project}) => {
                         </>
                     )
                     : (
-                        <form
+                        <Form
                             className='project__budget-form'
-                            onSubmit={handleUploadProject}
-                        >
-                            <input
-                                className='auth__input project__input project__input-budget'
-                                type="text"
-                                name="budget"
-                                id="budget"
-                                onChange={handleInputChange}
-                                value={budget}
-                            />
-                            <button className="project__form-btn"><i className='fas fa-check'></i></button>
-                        </form>
+                            handleSubmit={handleUploadProject}
+                            handleInputChange={handleInputChange}
+                            setter={setEditBudget}
+                            name='budget'
+                            value={budget} />
                     )
                 }
 
@@ -109,7 +118,14 @@ export const ProjectHeader = ({project}) => {
                     <option value="90">90%</option>
                     <option value="100">100%</option>
                 </select>
-                
+                <label htmlFor="contraseñas" className='project__header-passwords'>
+                    <input
+                        type="checkbox"
+                        id='contraseñas'
+                        name='passwords'
+                        checked={passwords}
+                        onChange={handleActivePasswords} /> Panel de Contraseñas
+                </label>
             </div>
             <div className="project__header-description">
                 <p className='color-blue'>Tareas: {project.tasks}</p>

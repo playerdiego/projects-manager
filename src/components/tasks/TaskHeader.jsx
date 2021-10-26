@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { useForm } from '../../hooks/useForm';
+import { Form } from '../ui/Form';
 
-export const TaskHeader = ({task, project}) => {
+export const TaskHeader = ({task, project, edit = false}) => {
 
-    const [editTitle, setEditTitle] = useState(false);
+    const [editTitle, setEditTitle] = useState(edit);
     
     const [{title}, handleInputChange] = useForm({
         ...task
@@ -49,20 +50,13 @@ export const TaskHeader = ({task, project}) => {
                         </h2>
                     )
                     : (
-                        <form
+                        <Form
                             className='project__title-form'
-                            onSubmit={handleUploadTask}
-                        >
-                            <input
-                                className='auth__input project__input'
-                                type="text"
-                                name="title"
-                                id="title"
-                                onChange={handleInputChange}
-                                value={title}
-                            />
-                            <button className="project__form-btn"><i className='fas fa-check'></i></button>
-                        </form>
+                            handleSubmit={handleUploadTask}
+                            name="title"
+                            setter={setEditTitle}
+                            handleInputChange={handleInputChange}
+                            value={title}/>
                     )
                 }
                 

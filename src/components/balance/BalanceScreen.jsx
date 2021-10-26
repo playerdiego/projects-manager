@@ -26,8 +26,8 @@ export const BalanceScreen = ({history}) => {
         });
     }, []);
 
-    const handleSelectProject = () => {
-        history.push('/projects')
+    const handleSelectProject = (project) => {
+        history.push(`/project/${project.id}`)
     } 
 
     return (

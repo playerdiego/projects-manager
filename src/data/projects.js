@@ -4,35 +4,40 @@ export const projects = [
         tasks: 5,
         budget: 1000,
         paid: 80,
-        id: 1
+        id: 1,
+        passwords: false
     },
     {
         name: 'Proyecto 2',
         tasks: 5,
         budget: 100,
         paid: 50,
-        id: 2
+        id: 2,
+        passwords: true
     },
     {
         name: 'Proyecto 3',
         tasks: 5,
         budget: 100,
         paid: 50,
-        id: 3
+        id: 3,
+        passwords: true
     },
     {
         name: 'Proyecto 4',
         tasks: 5,
         budget: 100,
         paid: 50,
-        id: 4
+        id: 4,
+        passwords: false
     },
     {
         name: 'Proyecto 5',
         tasks: 5,
         budget: 100,
         paid: 50,
-        id: 5
+        id: 5,
+        passwords: true
     },
 ]
 

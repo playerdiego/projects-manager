@@ -3,8 +3,9 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { closeSidebar } from '../../actions/uiActions';
 import { projects } from '../../data/projects';
+import { AddProjectBox } from '../projects/AddProjectBox';
+import { ProjectBox } from '../projects/ProjectBox';
 import Boxes from './Boxes';
-import { ProjectBox } from './ProjectBox';
 
 export const DashboardScreen = () => {
 
@@ -25,14 +26,7 @@ export const DashboardScreen = () => {
                 ? (
                     <div className="project-boxes__container">
 
-                        <div className="dashboard__box project__box add-project">
-                            <div className="dashboard__box-main">
-                                <h3 className='shadow-text'>Agregar Proyecto</h3>
-                            </div>
-                            <div className="dashboard__box-icon">
-                                <i className="fas fa-plus"></i>
-                            </div>
-                        </div>
+                        <AddProjectBox />
 
                         {
                             projects.map(project => (
