@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { tasks } from '../../data/tasks';
 import { getProjectById } from '../../helpers/getProjectById'
 import { useForm } from '../../hooks/useForm';
@@ -6,6 +6,10 @@ import { TaskBox } from '../tasks/TaskBox';
 import { Form } from '../ui/Form';
 import { Passwords } from '../passwords/Passwords';
 import { ProjectHeader } from './ProjectHeader';
+import { useDispatch } from 'react-redux';
+import { closeSidebar } from '../../actions/uiActions';
+import { Delete } from '../ui/Delete';
+import { swalConfirm } from '../../helpers/swalConfirm';
 
 export const Project = ({match: {params: {projectID}}}) => {
 
@@ -21,6 +25,21 @@ export const Project = ({match: {params: {projectID}}}) => {
 
         setAddTask(false);
         reset();
+    }
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(closeSidebar());
+        document.querySelector("body").scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, [dispatch]);
+
+    const handleDeleteProject = () => {
+        swalConfirm('¿Seguro que quieres eliminar el Proyecto? Se borrarán todos los datos', 'Se ha eliminado el proyecto', () => {})
+
     }
 
     return (
@@ -60,9 +79,13 @@ export const Project = ({match: {params: {projectID}}}) => {
                 }
 
                     {
+                        tasks.length > 0 ?
                         tasks.map(task => !task.done ? (
                             <TaskBox key={task.id} {...task} />
                         ): null)
+                        : (
+                            <h4 className='shadow-text'>No tienes Tareas. ¡Crea una! :(</h4>
+                        )
                     }
                 </div>
 
@@ -80,6 +103,8 @@ export const Project = ({match: {params: {projectID}}}) => {
                     project.passwords &&
                     <Passwords />
                 }
+
+                <Delete action={handleDeleteProject} />
             </div>
 
         </>

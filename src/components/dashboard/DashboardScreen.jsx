@@ -13,6 +13,10 @@ export const DashboardScreen = () => {
 
     useEffect(() => {
         dispatch(closeSidebar());
+        document.querySelector("body").scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     }, [dispatch]);
 
     return (
@@ -21,22 +25,19 @@ export const DashboardScreen = () => {
             <Boxes />
 
             <h2 className='shadow-text main__subtitle'>Proyectos</h2>
-            {
-                projects.length > 0
-                ? (
-                    <div className="project-boxes__container">
+            <div className="project-boxes__container">
 
-                        <AddProjectBox />
-
-                        {
-                            projects.map(project => (
-                                <ProjectBox key={project.id} {...project} />
-                            ))
-                        }
-                    </div>
-                )
-                : <h4 className='shadow-text'>No tienes proyectos. ¡Crea uno! :(</h4>
-            }
+                <AddProjectBox />
+                {
+                    projects.length > 0
+                    ? (
+                        projects.map(project => !project.closed && (
+                            <ProjectBox key={project.id} {...project} />
+                        ))
+                    )
+                    : <h4 className='shadow-text'>No tienes proyectos. ¡Crea uno! :(</h4>
+                }
+            </div>
             <div className="projects__btn-container">
                 <Link to='/projects' className='btn projects__btn'>
                     Ver todos los Proyectos <i className="fas fa-arrow-circle-right"></i>

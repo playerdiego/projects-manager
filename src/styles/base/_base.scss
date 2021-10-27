@@ -80,7 +80,7 @@ input, button {
 .btn {
     color: #61677C;
     font-weight: bold;
-    box-shadow: -5px -5px 20px $color-white, 5px 5px 20px $color-shadow;
+    box-shadow: -2px -2px 5px $color-white, 2px 2px 5px $color-shadow;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
     border: 0;
@@ -96,7 +96,7 @@ input, button {
     }
 
     &:hover {
-        box-shadow: -2px -2px 5px $color-white, 2px 2px 5px $color-shadow;
+        box-shadow: -1px -1px 3px $color-white, 1px 1px 3px $color-shadow;
     }
 
     &:active {

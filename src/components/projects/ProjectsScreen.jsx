@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { closeSidebar } from '../../actions/uiActions';
-import { projects, projectsClosed } from '../../data/projects';
+import { projects } from '../../data/projects';
 import { ProjectBox } from './ProjectBox';
 import { AddProjectBox } from './AddProjectBox';
 
@@ -11,6 +11,10 @@ export const ProjectsScreen = () => {
 
     useEffect(() => {
         dispatch(closeSidebar());
+        document.querySelector("body").scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     }, [dispatch]);
 
     return (
@@ -18,22 +22,18 @@ export const ProjectsScreen = () => {
             <h1 className='shadow-text main__title'>Proyectos</h1>
 
             <h2 className='shadow-text main__subtitle'>En curso</h2>
+            <div className="project-boxes__container">
+                <AddProjectBox />
             {
                 projects.length > 0
                 ? (
-                    <div className="project-boxes__container">
-
-                    <AddProjectBox />
-
-                        {
-                            projects.map(project => (
+                            projects.map(project => !project.closed && (
                                 <ProjectBox key={project.id} {...project} />
                             ))
-                        }
-                    </div>
                 )
                 : <h4 className='shadow-text'>No tienes proyectos. ¡Crea uno! :(</h4>
             }
+            </div>
 
             <h2 className='shadow-text main__subtitle'>Terminados</h2>
             {
@@ -41,7 +41,7 @@ export const ProjectsScreen = () => {
                 ? (
                     <div className="project-boxes__container">
                         {
-                            projectsClosed.map(project => (
+                            projects.map(project => project.closed && (
                                 <ProjectBox key={project.id} {...project} />
                             ))
                         }

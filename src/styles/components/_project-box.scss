@@ -1,0 +1,99 @@
+// Project Boxes
+
+.project-boxes__container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 50px 50px;
+    margin-bottom: 40px;
+}
+
+.project__box-container {
+    text-align: center;
+    position: relative;
+}
+
+.project__box-container i.fa-times {
+    position: absolute;
+    top: -20px;
+    right: 0;
+    color: $color-red;
+    opacity: 0;
+    transition: .5s;
+    cursor: pointer;
+}
+
+.project__box-container:hover i.fa-times{
+    opacity: 1;
+}
+
+.project__box p {
+    font-weight: bolder;
+}
+
+.project__box.closed {
+    opacity: 0.4;
+    box-shadow: -1px -1px 5px $color-white, 1px 2px 3px $color-shadow;
+}
+
+.project__box.closed p {
+    color:rgb(33, 37, 41);
+}
+
+
+.projects__btn-container {
+    width: 100%;
+    text-align: right;
+}
+
+.projects__btn {
+    width: auto;
+    box-shadow: -5px -5px 10px $color-white, 5px 5px 10px $color-shadow;
+}
+
+.projects__btn i {
+    font-size: 16px;
+}
+
+.project__type {
+    color: darken($color-shadow, 15);
+    font-weight: 400 !important;
+    font-size: 14px !important;
+}
+
+.project__add-form {
+    &:hover, &:active {
+        box-shadow: -5px -5px 10px #FFF, 5px 5px 10px #a2a5b1;
+    }
+}
+
+.project__add-form button {
+    box-shadow: -2px -2px 5px #FFF, 2px 2px 5px #a2a5b1;
+    padding: 15px;
+}
+
+@media only screen and (max-width: 1500px) {
+    .project-boxes__container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 0 20px;
+    }
+}
+
+@media only screen and (max-width: 1100px) {
+    .project-boxes__container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media only screen and (max-width: 756px) {
+    .project-boxes__container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media only screen and (max-width: 480px) {
+    .project-boxes__container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

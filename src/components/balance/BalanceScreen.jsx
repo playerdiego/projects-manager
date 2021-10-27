@@ -10,6 +10,10 @@ export const BalanceScreen = ({history}) => {
 
     useEffect(() => {
         dispatch(closeSidebar());
+        document.querySelector("body").scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     }, [dispatch]);
 
     const [{tasks, budget, paid}, setProjectsData] = useState({

@@ -4,6 +4,7 @@
     padding-top: 60px;
     transition: .5s;
     min-height: 94vh;
+    position: relative;
 }
 
 .main__container.open {
@@ -17,6 +18,14 @@
 
 .main__subtitle {
     margin-bottom: 40px;
+}
+
+.delete {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    color: $color-red;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 956px) {

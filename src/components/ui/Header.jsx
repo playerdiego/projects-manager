@@ -7,6 +7,7 @@ import { closeSidebar, openSiderbar } from '../../actions/uiActions';
 export const Header = () => {
 
     const {open} = useSelector(state => state.ui);
+    const {username} = useSelector(state => state.auth);
 
     const dispatch = useDispatch();
 
@@ -20,7 +21,13 @@ export const Header = () => {
             <div className="dashboard__header_toggle" onClick={handleToggle}> 
                 <i className={open ? 'fas fa-times' : 'fas fa-bars'} id="header-toggle"></i>
             </div>
-            <Link to='/account' className="dashboard__header_img"> <img src="https://i.imgur.com/hczKIze.jpg" alt="" /> </Link>
+            
+            <Link to='/account' className='dashboard__account'>
+                <p>Hola! {username}</p>
+                <div className="dashboard__header_img">
+                    <img src="https://i.imgur.com/hczKIze.jpg" alt="" />
+                </div>
+            </Link>
         </header>
     )
 }

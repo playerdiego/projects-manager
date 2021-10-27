@@ -1,9 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { swalConfirm } from '../../helpers/swalConfirm'
 
 export const TaskBox = ({title, id, projectID, done}) => {
 
     const handleToggleStatus = () => {
+        swalConfirm(
+            done ? '¿Seguro que quieres marcar esta tarea como "Por Completar"?' : '¿Seguro que quieres marcar esta tarea como "Completada"?',
+            done ? 'La Tarea se ha marcado como "Completada"' : 'La Tarea se ha marcado como "Por Completar"',
+            () => {}
+            )
+    }
+
+    const handleDeleteTask = () => {
+        swalConfirm('¿Seguro que quieres eliminar la Tarea? Se borrarán todos los datos', 'Se ha eliminado la Tarea', () => {});
     }
 
     return (
@@ -26,6 +36,7 @@ export const TaskBox = ({title, id, projectID, done}) => {
                 </h4>
                 <i className='fas fas fa-arrow-right'></i>
             </Link>
+            <i className="fas fa-times" onClick={handleDeleteTask}></i>
         </div>
     )
 }

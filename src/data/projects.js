@@ -5,7 +5,8 @@ export const projects = [
         budget: 1000,
         paid: 80,
         id: 1,
-        passwords: false
+        passwords: false,
+        closed: false
     },
     {
         name: 'Proyecto 2',
@@ -13,7 +14,8 @@ export const projects = [
         budget: 100,
         paid: 50,
         id: 2,
-        passwords: true
+        passwords: true,
+        closed: false
     },
     {
         name: 'Proyecto 3',
@@ -21,7 +23,8 @@ export const projects = [
         budget: 100,
         paid: 50,
         id: 3,
-        passwords: true
+        passwords: true,
+        closed: false
     },
     {
         name: 'Proyecto 4',
@@ -29,7 +32,8 @@ export const projects = [
         budget: 100,
         paid: 50,
         id: 4,
-        passwords: false
+        passwords: false,
+        closed: false
     },
     {
         name: 'Proyecto 5',
@@ -37,49 +41,34 @@ export const projects = [
         budget: 100,
         paid: 50,
         id: 5,
-        passwords: true
+        passwords: true,
+        closed: false
     },
-]
-
-export const projectsClosed = [
     {
-        name: 'Proyecto 1',
+        name: 'Proyecto 6',
         tasks: 5,
         budget: 100,
         paid: 50,
-        id: 1,
+        id: 6,
+        passwords: true,
         closed: true
     },
     {
-        name: 'Proyecto 2',
+        name: 'Proyecto 7',
         tasks: 5,
         budget: 100,
         paid: 50,
-        id: 2,
+        id: 7,
+        passwords: true,
         closed: true
     },
     {
-        name: 'Proyecto 3',
+        name: 'Proyecto 8',
         tasks: 5,
         budget: 100,
         paid: 50,
-        id: 3,
-        closed: true
-    },
-    {
-        name: 'Proyecto 4',
-        tasks: 5,
-        budget: 100,
-        paid: 50,
-        id: 4,
-        closed: true
-    },
-    {
-        name: 'Proyecto 5',
-        tasks: 5,
-        budget: 100,
-        paid: 50,
-        id: 5,
+        id: 8,
+        passwords: true,
         closed: true
     },
 ]

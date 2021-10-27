@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router';
 import { useForm } from '../../hooks/useForm';
 import { Form } from '../ui/Form';
+import { DeadLine } from './DeadLine';
+import { swalConfirm } from '../../helpers/swalConfirm';
 
 export const TaskHeader = ({task, project, edit = false}) => {
 
@@ -12,28 +13,32 @@ export const TaskHeader = ({task, project, edit = false}) => {
         ...task
     });
 
-    const history = useHistory();
-
-    const handleBack = () => {
-        history.goBack();
-    }
-
     const handleUploadTask = (e) => {
         e.preventDefault();
 
         setEditTitle(false);
     }
 
+    const handleCompleteTask = () => {
+        swalConfirm(
+            task.done ? '¿Quieres marcar esta tarea como "Por completar"?' : '¿Quieres marcar esta tarea como "Completada"?',
+            task.done ? 'El proyecto se ha marcado como "Completado"' : 'El proyecto se ha marcado como "Por completar"',
+            () => {});
+    };
+
+    const handleAddDeadLine = () => {
+        swalConfirm('¿Quieres añadir una Fecha Límite?', 'Se ha añadido la fecha límite, Ingresa una Fecha!', () => {});
+    }
+
     return (
         <div className="task__header-container">
             <div className="task__breadcrumb">
-                <button
+                <Link
                     className="btn btn-less-deep auth__button-back project__back"
-                    to='/auth/login'
-                    onClick={handleBack}
+                    to={`/project/${project.id}`}
                 >
                     <i className="fas fa-arrow-left"></i>
-                </button>
+                </Link>
                 <Link to={`/project/${project.id}`}>Proyecto: {project.name}</Link>
             </div>
             <div className="task__header project__header">
@@ -60,9 +65,22 @@ export const TaskHeader = ({task, project, edit = false}) => {
                     )
                 }
                 
-                <button className={task.done ? 'task__status btn completed' : 'task__status btn'}>
+                <button className={task.done ? 'task__status btn completed' : 'task__status btn'} onClick={handleCompleteTask}>
                     { task.done ? 'Completado' : 'Por Completar' }
                 </button>
+
+                {
+                    !task.deadLine 
+                    ? (
+                        <button className='task__status btn' onClick={handleAddDeadLine}>
+                            Añadir Fecha Límite <i className="fas fa-calendar"></i>
+                        </button>
+                    )
+                    : (
+                        <DeadLine {...task} />
+                    )
+                }
+
 
             </div>
         </div>

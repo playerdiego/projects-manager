@@ -21,6 +21,10 @@
     margin-bottom: 0;
 }
 
+.project__status {
+    grid-area: status;
+}
+
 .project__budget,.project__budget-form input {
     grid-area: budget;
     background: $color-green;
@@ -31,6 +35,18 @@
     border-radius: 10px;
     box-shadow: inset 2px 2px 5px darken($color: $color-green, $amount: 20), inset -5px -5px 10px darken($color: $color-green, $amount: 10);
     position: relative;
+}
+
+.project__budget.yellow {
+    background:$color-yellow;
+    box-shadow: inset 2px 2px 5px darken($color: $color-yellow, $amount: 20), inset -5px -5px 10px darken($color: $color-yellow, $amount: 10);
+    
+    color: #000;
+}
+.project__budget.red {
+    background:$color-red;
+    box-shadow: inset 2px 2px 5px darken($color: $color-red, $amount: 20), inset -5px -5px 10px darken($color: $color-red, $amount: 10);
+    color: #000;
 }
 
 .project__budget-form {
@@ -124,6 +140,7 @@
 }
 
 .project__header-passwords {
+    grid-area: passwords;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -140,19 +157,24 @@
     appearance: auto;
 }
 
-@media only screen and(max-width: 600px) {
-    .project__header h1 {
-        font-size: 32px;
+@media only screen and(max-width: 1250px) {
+    .project__header {
+        margin-top: 20px;
     }
-
 }
 
-@media only screen and(max-width: 556px) {
+@media only screen and(max-width: 956px) {
     .project__header {
         display: grid;
         grid-template-areas: "back back back back back"
         "title title title title title"
-        "budget budget budget percentage percentage";
+        "budget budget budget percentage percentage"
+        "status status passwords passwords passwords";
+        margin-top: 50px;
+    }
+
+    .project__header-passwords {
+        margin-top: 20px;
     }
     
     .project__back {
@@ -183,4 +205,10 @@
         margin-bottom: 10px;
         text-align: center;
     }
+}
+@media only screen and(max-width: 600px) {
+    .project__header h1 {
+        font-size: 32px;
+    }
+
 }

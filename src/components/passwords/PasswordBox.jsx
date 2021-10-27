@@ -14,7 +14,7 @@ export const PasswordBox = ({title, url, username, password}) => {
     const [editUser, setEditUser] = useState(false);
     const [editPass, setEditPass] = useState(false);
 
-    const [passwordValues, handleInputChange, reset] = useForm({title, url, username, password});
+    const [passwordValues, handleInputChange] = useForm({title, url, username, password});
 
     useEffect(() => {
         

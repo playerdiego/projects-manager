@@ -1,8 +1,12 @@
-import React, {useRef} from 'react'
+import React, {useEffect, useRef} from 'react'
 import { getProjectById } from '../../helpers/getProjectById';
 import { getTaskById } from '../../helpers/getTaskById'
 import { TaskHeader } from './TaskHeader';
 import {Editor} from '@tinymce/tinymce-react';
+import { closeSidebar } from '../../actions/uiActions';
+import { useDispatch } from 'react-redux';
+import { swalConfirm } from '../../helpers/swalConfirm';
+import { Delete } from '../ui/Delete';
 
 export const TaskScreen = ({match: {params: {taskID}}}) => {
 
@@ -17,6 +21,20 @@ export const TaskScreen = ({match: {params: {taskID}}}) => {
     // const handleUploadTask = () => {
 
     // }
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(closeSidebar());
+        document.querySelector("body").scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, [dispatch]);
+
+    const handleDeleteTask = () => {
+        swalConfirm('¿Seguro que quieres eliminar la Tarea? Se borrarán todos los datos', 'Se ha eliminado la Tarea', () => {});
+    }
 
     return (
         <>
@@ -43,6 +61,7 @@ export const TaskScreen = ({match: {params: {taskID}}}) => {
                 }}
             />
             <button className='btn task__btn'>Guardar</button>
+            <Delete action={handleDeleteTask} />
         </>
     )
 }

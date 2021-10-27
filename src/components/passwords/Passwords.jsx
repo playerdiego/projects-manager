@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { passwords } from '../../data/passwords';
 import { NewPassword } from './NewPassword';
 import { PasswordBox } from './PasswordBox';

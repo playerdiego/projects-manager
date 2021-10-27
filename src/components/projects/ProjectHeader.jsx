@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import { Form } from '../ui/Form';
 import Swal from 'sweetalert2';
+import { swalConfirm } from '../../helpers/swalConfirm';
 
 export const ProjectHeader = ({project}) => {
 
@@ -39,6 +40,14 @@ export const ProjectHeader = ({project}) => {
                 Swal.fire(passwords ? 'Se ha añadido el panel de contraseñas' : 'Se ha eliminado el panel de contraseñas', '', 'success');
             }
           })
+    }
+
+    const handleCloseProject = () => {
+        swalConfirm(
+            project.closed ? '¿Seguro que quieres pasar este proyecto a Desarrollo?' : '¿Seguro que quieres Completar este proyecto?',
+            project.closed ? 'El proyecto se ha Completado' : 'EL proyecto se ha puesto en Desarrollo',
+            () => {}
+        )
     }
 
 
@@ -126,6 +135,9 @@ export const ProjectHeader = ({project}) => {
                         checked={passwords}
                         onChange={handleActivePasswords} /> Panel de Contraseñas
                 </label>
+                <button className={project.closed ? 'task__status project__status btn completed' : 'task__status project__status btn'} onClick={handleCloseProject}>
+                    { project.closed ? 'Completado' : 'Por Completar' }
+                </button>
             </div>
             <div className="project__header-description">
                 <p className='color-blue'>Tareas: {project.tasks}</p>

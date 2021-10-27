@@ -6,6 +6,7 @@ export const AddProjectForm = ({setAddProject}) => {
     const handleAddProject = (e) => {
 
         e.preventDefault();
+        reset();   
     };
 
     const [{title, budget, paid, passwords}, handleInputChange, reset] = useForm({
