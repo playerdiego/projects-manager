@@ -46,6 +46,21 @@ export const PasswordBox = ({title, url, username, password}) => {
 
     }
 
+    const handleCopy = (text, e) => {
+        navigator.clipboard.writeText(text);
+
+        e.target.classList.remove('fa-copy');
+        e.target.classList.add('fa-check');
+
+        setTimeout(() => {
+
+            e.target.classList.remove('fa-check');
+            e.target.classList.add('fa-copy');
+            
+        }, 1500);
+        
+    }
+
     return (
         <div className='password__box'>
             <div className="password__box-main">
@@ -95,7 +110,9 @@ export const PasswordBox = ({title, url, username, password}) => {
                     !editUser
                     ? (
                         <div className="password__box-field">
-                            <p><b>User/Email:</b> {passwordValues.username} <i className='fas fa-copy'></i></p>
+                            <p>
+                                <b>User/Email:</b> {passwordValues.username} <i className='fas fa-copy' onClick={(e) => handleCopy(username, e)}></i>
+                            </p>
                             <i
                                 className={!editTitle && !editURL && !editUser && !editPass ? `fas fa-pencil` : 'hidden'}
                                 onClick={() => setEditUser(true)}></i>
@@ -121,7 +138,7 @@ export const PasswordBox = ({title, url, username, password}) => {
                                 {
                                     showPass ? passwordValues.password : hiddenPass
 
-                                } <i className='fas fa-copy'></i>
+                                } <i className='fas fa-copy' onClick={(e) => handleCopy(password, e)}></i>
                                 <i
                                     className={!showPass ? 'fas fa-eye show-pass' : 'fas fa-eye-slash show-pass'}
                                     onClick={toggleShow}

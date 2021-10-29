@@ -1,13 +1,9 @@
+import { addDoc, collection } from '@firebase/firestore';
 import React from 'react'
+import { db } from '../../firesbase/firebase-config';
 import { useForm } from '../../hooks/useForm'
 
 export const AddProjectForm = ({setAddProject}) => {
-
-    const handleAddProject = (e) => {
-
-        e.preventDefault();
-        reset();   
-    };
 
     const [{title, budget, paid, passwords}, handleInputChange, reset] = useForm({
         title: '',
@@ -23,6 +19,19 @@ export const AddProjectForm = ({setAddProject}) => {
                 value: !passwords
             }
         });
+    };
+
+    const handleAddProject = (e) => {
+        e.preventDefault();
+
+        addDoc(collection(db, 'projects'), {
+            title,
+            budget,
+            paid,
+            passwords
+        });
+
+        reset();   
     };
 
     return (
