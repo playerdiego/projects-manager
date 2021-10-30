@@ -26,6 +26,12 @@
     right: 20px;
     color: $color-red;
     cursor: pointer;
+    background: $color-red;
+    color: #FFF;
+    padding: 5px 20px;
+    font-weight: bolder;
+    border-radius: 10px;
+    box-shadow: inset 2px 2px 5px darken($color-red, 20), inset -5px -5px 10px darken($color-red, 20);
 }
 
 @media only screen and (max-width: 956px) {

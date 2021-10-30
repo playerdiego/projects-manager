@@ -172,3 +172,14 @@ input {
         z-index: 10000000;
     }
 }
+
+.errorForm__container {
+    background: $color-red;
+    text-align: center;
+    color: $color-white;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-weight: bolder;
+    box-shadow: inset 2px 2px 5px darken($color-red, 20), inset -2px -2px 5px lighten($color-red, 20);
+    border-radius: 5px;
+}

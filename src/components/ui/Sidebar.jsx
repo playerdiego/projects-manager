@@ -1,10 +1,17 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { startLogout } from '../../actions/authActions';
+import { swalConfirm } from '../../helpers/swalConfirm';
 
 export const Sidebar = () => {
 
     const {open} = useSelector(state => state.ui);
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        swalConfirm('¿Seguro que quieres cerrar sesión?', '', () => dispatch(startLogout()))
+    }
 
     return (
         <div className={open ? 'sidebar__container open': 'sidebar__container'} id="nav-bar">
@@ -42,10 +49,10 @@ export const Sidebar = () => {
                         <i className='fas fa-user'></i>
                         <span className={!open ? 'hide' : ''}>Mi Cuenta</span>
                     </Link>
-                    <Link to='/auth' className="sidebar__nav-link logout">
+                    <button className="sidebar__nav-link logout" onClick={handleLogout}>
                         <i className='fas fa-sign-out-alt'></i>
                         <span className={!open ? 'hide' : ''}>Cerrar Sesión</span>
-                    </Link>
+                    </button>
                 </div>
             </nav>
         </div>

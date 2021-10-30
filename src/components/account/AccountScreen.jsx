@@ -5,10 +5,11 @@ import { Link, useHistory } from 'react-router-dom';
 import { closeSidebar } from '../../actions/uiActions';
 import { useForm } from '../../hooks/useForm';
 import { Form } from '../ui/Form';
+import ProfilePic from '../../assets/profile-pic.png';
 
 export const AccountScreen = () => {
 
-    const {username, email} = useSelector(state => state.auth);
+    const {username, email, photo} = useSelector(state => state.auth);
 
     const [userValues, handleInputChange] = useForm({username, email});
 
@@ -52,7 +53,7 @@ export const AccountScreen = () => {
 
             <div className="account__main">
                 <div className="account__profile-img">
-                    <img src="https://i.imgur.com/hczKIze.jpg" alt="profile" />
+                    <img src={ photo ? photo :  ProfilePic} alt={userValues.username} />
                     <i
                         className={!editUser && !editEmail ? 'fas fa-pencil' : 'hidden'}
                         >

@@ -19,10 +19,12 @@
     position: relative;
     display: inline-block;
     margin-bottom: 30px;
+    max-width: 300px;
 }
 
 .account__profile-img img {
     border-radius: 50%;
+    max-width: 100%;
     min-width: 300px;
 }
 
@@ -33,7 +35,7 @@
 }
 
 .account__field, .account__main input {
-    min-width: 300px;
+    min-width: 350px;
     margin-bottom: 20px;
     padding: 10px;
     box-shadow: inset -2px -2px 5px #FFF, inset 2px 2px 5px #a2a5b1;

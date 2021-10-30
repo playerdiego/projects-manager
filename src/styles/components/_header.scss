@@ -39,6 +39,22 @@
     width: 40px
 }
 
+.dashboard__account a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__logout {
+    color: darken($color-shadow, 10);
+    cursor: pointer;
+    transition: .5s;
+    margin-left: 50px;
+    &:hover {
+        color: $color-shadow;
+    }
+}
+
 @media only screen and (max-width: 956px) {
     .dashboard__header {
         padding-left: 30px;

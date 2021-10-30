@@ -1,6 +1,5 @@
 import Swal from 'sweetalert2';
 
-
 export const swalConfirm = (title, confirmation, action) => {
     Swal.fire({
         title,
