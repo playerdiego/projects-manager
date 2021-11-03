@@ -55,8 +55,32 @@
     }
 }
 
+.header__verify {
+    margin-right: 20px;
+    font-size: 14px;
+    color: darken($color-yellow, 30);
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 956px) {
     .dashboard__header {
         padding-left: 30px;
+    }
+
+    .header__logout * {
+        display: none;
+    }
+
+    .header__logout i {
+        display: inline-block;
+    }
+
+    .header__verify {
+        font-size: 8px;
+    }
+
+    .header__user {
+        font-size: 12px;
+        justify-content: right;
     }
 }

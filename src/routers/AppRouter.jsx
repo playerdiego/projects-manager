@@ -20,7 +20,7 @@ export const AppRouter = () => {
         const auth = getAuth();
         onAuthStateChanged(auth, async (user) => {
             if(user) {
-                dispatch(login(user.displayName, user.email, user.uid, user.photoURL));
+                dispatch(login(user.displayName, user.email, user.uid, user.photoURL, user.emailVerified));
                 setIsAuth(true);
 
             } else {

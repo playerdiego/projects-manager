@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateProfile } from "@firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile } from "@firebase/auth";
 import Swal from "sweetalert2";
 import { githubAuthProvider, googleAuthProvider } from "../firesbase/firebase-config";
 import { signInPopup } from "../helpers/signInPopup";
@@ -14,7 +14,7 @@ export const startLoginWithEmail = (email, password) => {
         
         const auth = getAuth();
         signInWithEmailAndPassword(auth, email, password).then(({user}) => {
-            dispatch(login(user.displayName, user.email, user.uid, user.photoURL));
+            dispatch(login(user.displayName, user.email, user.uid, user.photoURL, user.emailVerified));
             Swal.close();
         }).catch(err => {
             Swal.fire('Error', err.message, 'error');
@@ -24,13 +24,13 @@ export const startLoginWithEmail = (email, password) => {
 
 export const startGoogleLogin = () => {
     return (dispatch) => {
-        signInPopup(dispatch, googleAuthProvider);
+        signInPopup(dispatch, googleAuthProvider, false);
     }
 };
 
 export const startGithubLogin = () => {
     return (dispatch) => {
-        signInPopup(dispatch, githubAuthProvider);
+        signInPopup(dispatch, githubAuthProvider, true);
     }
 }
 
@@ -39,6 +39,7 @@ export const startRegisterWithEmail = (name, email, password) => {
     return (dispatch) => {
         swalLoading('Creando Cuenta', 'Por favor, espere');
         const auth = getAuth();
+        auth.languageCode = 'es';
         createUserWithEmailAndPassword(auth, email, password)
             .then(async ({user}) => {
 
@@ -46,8 +47,13 @@ export const startRegisterWithEmail = (name, email, password) => {
                     displayName: name
                 })
 
-                const {displayName, email, uid, photoURL} = user;
-                dispatch(login(displayName, email, uid, photoURL));
+                dispatch(login(user.displayName, user.email, user.uid, user.photoURL, user.emailVerified));
+
+                sendEmailVerification(auth.currentUser)
+                .then(() => {
+                    Swal.fire('Se ha enviado el enlace de verificación', `Revisa tu correo ${user.email}`, 'success');
+                });
+
                 Swal.close();
             }).catch(err => {
                 Swal.fire('Error', err.message, 'error');
@@ -73,9 +79,9 @@ export const startLogout = () => {
 
 // Normal Actions
 
-export const login = (username, email, uid, photo) => ({
+export const login = (username, email, uid, photo, emailVerified) => ({
     type: types.login,
-    payload: {username, email, uid, photo}
+    payload: {username, email, uid, photo, emailVerified}
 });
 
 export const logout = () => ({
