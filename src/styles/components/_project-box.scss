@@ -71,6 +71,23 @@
     padding: 15px;
 }
 
+.project__add-form .project__percentage {
+    margin-left: 0;
+    width: 100%;
+    box-shadow: inset 2px 2px 5px #a2a5b1, inset -5px -5px 10px #FFF;
+    border-radius: 5px;
+    padding: 16px;
+    font-weight: normal;
+}
+
+.project__box .fa-key {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 14px;
+}
+
+
 @media only screen and (max-width: 1500px) {
     .project-boxes__container {
         display: grid;

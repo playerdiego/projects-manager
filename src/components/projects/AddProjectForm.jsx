@@ -30,7 +30,15 @@ export const AddProjectForm = ({setAddProject}) => {
         e.preventDefault();
 
         if(checkForm()) {
-            const project = {name, budget: parseFloat(budget), paid: parseFloat(paid), passwords, tasks: [], closed: false};
+            const project = {
+                name,
+                budget: parseFloat(budget),
+                paid: parseFloat(paid),
+                passwords,
+                tasks: [],
+                closed: false,
+                date: new Date()
+            };
 
             dispatch(startAddProject(project))
             reset();
@@ -68,14 +76,26 @@ export const AddProjectForm = ({setAddProject}) => {
                     onChange={(e) => onlyNumber(e, handleInputChange)}
                     required
                     />
-                <input
-                    type='text'
-                    name='paid'
+                <select
+                    name="paid"
+                    id=""
+                    className='project__percentage'
                     value={paid}
-                    onChange={(e) => onlyNumber(e, handleInputChange)}
-                    placeholder='% Pagado'
+                    onChange={handleInputChange}
                     required
-                    />
+                >
+                    <option selected hidden>% Completado</option>
+                    <option value="10">10%</option>
+                    <option value="20">20%</option>
+                    <option value="30">30%</option>
+                    <option value="40">40%</option>
+                    <option value="50">50%</option>
+                    <option value="60">60%</option>
+                    <option value="70">70%</option>
+                    <option value="80">80%</option>
+                    <option value="90">90%</option>
+                    <option value="100">100%</option>
+                </select>
                 <label htmlFor="contraseñas" className='project__header-passwords'>
                     <input
                         type="checkbox"

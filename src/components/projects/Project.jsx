@@ -10,11 +10,27 @@ import { useDispatch } from 'react-redux';
 import { closeSidebar } from '../../actions/uiActions';
 import { Delete } from '../ui/Delete';
 import { swalConfirm } from '../../helpers/swalConfirm';
+import { useSelector } from 'react-redux';
+import { scrolltoTop } from '../../helpers/scrollToTop';
+import { Loading } from '../ui/Loading';
+import { startDeleteProject } from '../../actions/projectsActions';
+import { useHistory } from 'react-router';
 
 export const Project = ({match: {params: {projectID}}}) => {
 
     const [addTask, setAddTask] = useState(false);
-    const project = getProjectById(projectID);
+    const [project, setProject] = useState(null);
+    
+    const history = useHistory()
+    const projects = useSelector(state => state.projects);
+    const dispatch = useDispatch();
+    
+    useEffect(() => {
+        if(projects.length > 0) {
+            setProject(getProjectById(projectID, projects))
+        }
+    }, [projects, projectID])
+
 
     const [{taskName}, handleInputChange, reset] = useForm({
         taskName: ''
@@ -27,19 +43,21 @@ export const Project = ({match: {params: {projectID}}}) => {
         reset();
     }
 
-    const dispatch = useDispatch();
-
     useEffect(() => {
         dispatch(closeSidebar());
-        document.querySelector("body").scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        scrolltoTop();
     }, [dispatch]);
 
     const handleDeleteProject = () => {
-        swalConfirm('¿Seguro que quieres eliminar el Proyecto? Se borrarán todos los datos', 'Se ha eliminado el proyecto', () => {})
+        swalConfirm('¿Seguro que quieres eliminar el Proyecto? Se borrarán todos los datos', 'Se ha eliminado el proyecto', () => {
+            dispatch(startDeleteProject(project.id));
+            history.replace('/projects')
+        });
 
+    }
+
+    if(project === null) {
+        return <Loading />
     }
 
     return (

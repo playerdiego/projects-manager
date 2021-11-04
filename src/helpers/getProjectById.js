@@ -1,6 +1,4 @@
-import { projects } from "../data/projects";
-
-export const getProjectById = (id) => {
+export const getProjectById = (id, projects) => {
     // eslint-disable-next-line
     return projects.find(project => project.id == id);
 };

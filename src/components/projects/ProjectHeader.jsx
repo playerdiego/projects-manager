@@ -4,11 +4,15 @@ import { useForm } from '../../hooks/useForm';
 import { Form } from '../ui/Form';
 import Swal from 'sweetalert2';
 import { swalConfirm } from '../../helpers/swalConfirm';
+import { useDispatch } from 'react-redux';
+import { startUpdateProject } from '../../actions/projectsActions';
 
 export const ProjectHeader = ({project}) => {
 
     const [editTitle, setEditTitle] = useState(false);
     const [editBudget, setEditBudget] = useState(false);
+
+    const dispatch = useDispatch();
     
     const [{name, budget, paid, passwords}, handleInputChange] = useForm({
         ...project
@@ -17,8 +21,25 @@ export const ProjectHeader = ({project}) => {
     const handleUploadProject = (e) => {
         e.preventDefault();
 
+        dispatch(startUpdateProject(project.id, {
+            name,
+            budget: parseFloat(budget),
+            paid: parseFloat(paid),
+            passwords
+        }));
+
         setEditTitle(false);
         setEditBudget(false);
+    }
+
+    const handleUploadPaid = (e) => {
+
+        handleInputChange(e);
+
+        dispatch(startUpdateProject(project.id, {
+            paid: e.target.value,
+        }));
+
     }
 
     const handleActivePasswords = (e) => {
@@ -37,7 +58,11 @@ export const ProjectHeader = ({project}) => {
                     }
                 });
 
-                Swal.fire(passwords ? 'Se ha añadido el panel de contraseñas' : 'Se ha eliminado el panel de contraseñas', '', 'success');
+                dispatch(startUpdateProject(project.id, {
+                    passwords: !passwords
+                }));
+
+                Swal.fire(!passwords ? 'Se ha añadido el panel de contraseñas' : 'Se ha eliminado el panel de contraseñas', '', 'success');
             }
           })
     }
@@ -46,7 +71,11 @@ export const ProjectHeader = ({project}) => {
         swalConfirm(
             project.closed ? '¿Seguro que quieres pasar este proyecto a Desarrollo?' : '¿Seguro que quieres Completar este proyecto?',
             project.closed ? 'El proyecto se ha Completado' : 'EL proyecto se ha puesto en Desarrollo',
-            () => {}
+            () => {
+                dispatch(startUpdateProject(project.id, {
+                    closed: !project.closed
+                }));
+            }
         )
     }
 
@@ -114,7 +143,7 @@ export const ProjectHeader = ({project}) => {
                     id=""
                     className='project__percentage'
                     value={paid}
-                    onChange={handleInputChange}
+                    onChange={handleUploadPaid}
                 >
                     <option value="10">10%</option>
                     <option value="20">20%</option>

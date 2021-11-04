@@ -4,6 +4,7 @@ import { githubAuthProvider, googleAuthProvider } from "../firesbase/firebase-co
 import { signInPopup } from "../helpers/signInPopup";
 import { swalLoading } from "../helpers/swalLoading";
 import { types } from "../types/types";
+import { cleanProjects } from "./projectsActions";
 
 // Login
 
@@ -69,8 +70,9 @@ export const startLogout = () => {
 
         const auth = getAuth();
         signOut(auth).then(() => {
-            dispatch(logout);
+            dispatch(logout());
             Swal.close();
+            dispatch(cleanProjects());
         }).catch(err => {
             Swal.fire('Error', err.message, 'error');
         })

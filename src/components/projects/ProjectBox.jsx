@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { startDeleteProject } from '../../actions/projectsActions'
 import { swalConfirm } from '../../helpers/swalConfirm'
 
-export const ProjectBox = ({name, tasks, budget, paid, closed, id, type}) => {
+export const ProjectBox = ({name, tasks, budget, paid, closed, id, passwords}) => {
 
     const dispatch = useDispatch();
 
@@ -18,14 +18,24 @@ export const ProjectBox = ({name, tasks, budget, paid, closed, id, type}) => {
         <div className="project__box-container">
             <Link to={`/project/${id}`} className={closed ? 'dashboard__box project__box closed' : 'dashboard__box project__box'}>
                 <div className="dashboard__box-main">
-                    <h3>{name}</h3>
+                    <h3>
+                        {
+                            name.length > 20
+                            ? name.slice(0, 20) + '...'
+                            : name
+                        }
+                    </h3>
             
-                    <p className='color-blue'>Tareas: {tasks}</p>
+                    <p className='color-blue'>Tareas: {tasks.length}</p>
                     <p className='color-green'>Presupuesto: {budget}$</p>
                     <p className='color-light-green'>Pagado: {paid}% ({budget * (paid / 100)}$)</p>
                     <p className='color-red'>Por Pagar: {100 - paid}% ({budget * ((100 - paid) / 100)}$)</p>
                 </div>
                 <span className="dashboard__box-footer">Ver proyecto <i className="fas fa-arrow-circle-right"></i></span>
+                {
+                    passwords &&
+                    <i className='fas fa-key'></i>
+                }
             </Link>
             <i className="fas fa-times" onClick={handleDeleteProject}></i>
         </div>

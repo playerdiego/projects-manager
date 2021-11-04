@@ -12,4 +12,5 @@ export const types = {
     deleteProject : '[Project] Delete Project',
     updateProject : '[Project] Update Project',
     loadProjects : '[Project] Load Projects',
+    cleanProjects : '[Project] Clean Projects',
 }

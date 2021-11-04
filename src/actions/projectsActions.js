@@ -1,5 +1,5 @@
 import { getAuth } from "@firebase/auth";
-import { addDoc, collection, deleteDoc, doc, getDocs } from "@firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, orderBy, query, updateDoc } from "@firebase/firestore";
 import Swal from "sweetalert2";
 import { db } from "../firesbase/firebase-config";
 import { swalLoading } from "../helpers/swalLoading";
@@ -10,7 +10,7 @@ export const startLoadProjects = (uid) => {
     return async (dispatch) => {
         
         dispatch(startLoading());
-        const projectsSnap = await getDocs(collection(db, uid));
+        const projectsSnap = await getDocs(query(collection(db, uid), orderBy('date', 'desc')));
         const projects = [];
         
         projectsSnap.docs.forEach(snap => {
@@ -42,6 +42,18 @@ export const startAddProject = (project) => {
             .catch(err => Swal.fire('Error', err.message, 'error'))
     }
 }
+export const startUpdateProject = (projectID, project) => {
+    return (dispatch) => {
+        const auth = getAuth();
+        swalLoading('Se esta actualizand la información del Proyecto', 'Por favor, espere');
+        updateDoc(doc(db, auth.currentUser.uid, projectID), project)
+            .then(() => {
+                Swal.close();
+                dispatch(updateProject(projectID, project));
+            })
+            .catch(err => Swal.fire('Error', err.message, 'error'))
+    }
+}
 
 export const startDeleteProject = (projectID) => {
     return (dispatch) => {
@@ -58,17 +70,30 @@ export const startDeleteProject = (projectID) => {
     }
 }
 
-export const loadProjects = (projects) => ({
-    type: types.loadProjects,
-    payload: projects
-});
 
 export const addProject = (project) => ({
     type: types.addProject,
     payload: project
 });
 
+export const updateProject = (projectID, project) => ({
+    type: types.updateProject,
+    payload: {
+        projectID,
+        project
+    }
+});
+
 export const deleteProject = (projectID) => ({
     type: types.deleteProject,
     payload: projectID
 })
+
+export const loadProjects = (projects) => ({
+    type: types.loadProjects,
+    payload: projects
+});
+
+export const cleanProjects = () => ({
+    type: types.cleanProjects
+});
