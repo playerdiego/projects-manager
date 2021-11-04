@@ -1,40 +1,41 @@
-import { projects } from "../data/projects";
 
-export const getTasksLenght = () => {
+export const getTasksLenght = (projects) => {
     let tasks = 0;
+    
     projects.forEach(project => {
-        tasks += project.tasks
+        tasks += project.tasks.length
     });
 
     return tasks;
 };
 
-export const getProjectsBudget = () => {
+export const getProjectsBudget = (projects) => {
     let budget = 0;
     
     projects.forEach(project => {
         budget += project.budget
     });
-
+    
     return budget;
 }
 
-export const getProjectPercentage = (project) => {
+export const getProjectPercentage = (project, projects) => {
 
-    const total = getProjectsBudget();
+    const total = getProjectsBudget(projects);
 
     const percentage = (project.budget / total) * 100;
+
 
     return percentage;
 }
 
-export const getProjectsPaid = () => {
+export const getProjectsPaid = (projects) => {
 
     let paid = [];
     let total = 0;
 
     // Obetenemos el procentaje que representa cada proyecto
-    const percentages = projects.map(project => getProjectPercentage(project));
+    const percentages = projects.map(project => getProjectPercentage(project, projects));
     
     // Obtenemos el porcentaje pagado de cada proyecto
     for (let i = 0; i < projects.length; i++) paid.push( percentages[i] * (projects[i].paid / 100));

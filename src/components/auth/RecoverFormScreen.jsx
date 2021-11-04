@@ -1,7 +1,6 @@
 import { getAuth } from '@firebase/auth';
 import React from 'react'
 import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import { useForm } from '../../hooks/useForm';
 
 export const RecoverFormScreen = () => {
@@ -17,6 +16,8 @@ export const RecoverFormScreen = () => {
         const auth = getAuth();
         console.log(auth);
         auth.languageCode = 'es';
+
+        reset();
     }
 
     return (

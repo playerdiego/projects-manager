@@ -1,20 +1,21 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { closeSidebar } from '../../actions/uiActions';
-import { projects } from '../../data/projects';
 import { ProjectBox } from './ProjectBox';
 import { AddProjectBox } from './AddProjectBox';
+import { scrolltoTop } from '../../helpers/scrollToTop';
+import { useSelector } from 'react-redux';
 
 export const ProjectsScreen = () => {
+
+    const projects = useSelector(state => state.projects);
+    const {loading} = useSelector(state => state.ui);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(closeSidebar());
-        document.querySelector("body").scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        scrolltoTop();
     }, [dispatch]);
 
     return (
@@ -31,7 +32,12 @@ export const ProjectsScreen = () => {
                                 <ProjectBox key={project.id} {...project} />
                             ))
                 )
-                : <h4 className='shadow-text'>No tienes proyectos. ¡Crea uno! :(</h4>
+                : loading ? (
+                    <h4 className='shadow-text'>Cargando...</h4>
+                )
+                : (
+                    <h4 className='shadow-text'>No tienes proyectos. ¡Crea uno! :(</h4>
+                )
             }
             </div>
 
@@ -47,7 +53,12 @@ export const ProjectsScreen = () => {
                         }
                     </div>
                 )
-                : <h4 className='shadow-text'>No tienes proyectos. ¡Crea uno! :(</h4>
+                : loading ? (
+                    <h4 className='shadow-text'>Cargando...</h4>
+                )
+                : (
+                    <h4 className='shadow-text'>No tienes proyectos Terminados. ¡Crea uno! :(</h4>
+                )
             }
         </>
     )

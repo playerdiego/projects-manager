@@ -1,7 +1,8 @@
 import { types } from "../types/types";
 
 const initialState = {
-    open: false
+    open: false,
+    loading: false
 };
 
 export const uiReducer = (state = initialState, action) => {
@@ -16,6 +17,18 @@ export const uiReducer = (state = initialState, action) => {
                 ...state,
                 open: false
             }
+        case types.startLoading: {
+            return {
+                ...state,
+                loading: true
+            }
+        }
+        case types.stopLoading: {
+            return {
+                ...state,
+                loading: false
+            }
+        }
         default:
             return state;
     };

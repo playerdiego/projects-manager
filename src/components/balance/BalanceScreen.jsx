@@ -1,34 +1,34 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { closeSidebar } from '../../actions/uiActions';
-import { projects } from '../../data/projects';
 import { getProjectsBudget, getProjectsPaid, getTasksLenght } from '../../helpers/getProjectsInfo';
+import { scrolltoTop } from '../../helpers/scrollToTop';
 
 export const BalanceScreen = ({history}) => {
+
+    const projects = useSelector(state => state.projects);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(closeSidebar());
-        document.querySelector("body").scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        scrolltoTop();
     }, [dispatch]);
 
     const [{tasks, budget, paid}, setProjectsData] = useState({
-        tasks: getTasksLenght(),
-        budget: getProjectsBudget(),
-        paid: getProjectsPaid(),
+        tasks: 0,
+        budget: 0,
+        paid: 0,
     });
 
     useEffect(() => {
         setProjectsData({
-            tasks: getTasksLenght(),
-            budget: getProjectsBudget(),
-            paid: getProjectsPaid(),
+            tasks: getTasksLenght(projects),
+            budget: getProjectsBudget(projects),
+            paid: getProjectsPaid(projects),
         });
-    }, []);
+    }, [projects]);
 
     const handleSelectProject = (project) => {
         history.push(`/project/${project.id}`)
@@ -54,7 +54,7 @@ export const BalanceScreen = ({history}) => {
                             projects.map(project => (
                                 <tr onClick={() => handleSelectProject(project)} key={project.id}>
                                     <td>{project.name}</td>
-                                    <td>{project.tasks}</td>
+                                    <td>{project.tasks.length}</td>
                                     <td>{project.paid}% ({project.budget * (project.paid / 100)}$)</td>
                                     <td>{100 - project.paid}% ({project.budget * ((100 - project.paid) / 100)}$)</td>
                                     <td>{project.budget}$</td>

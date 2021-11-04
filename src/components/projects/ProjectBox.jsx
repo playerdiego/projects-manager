@@ -1,11 +1,17 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { startDeleteProject } from '../../actions/projectsActions'
 import { swalConfirm } from '../../helpers/swalConfirm'
 
 export const ProjectBox = ({name, tasks, budget, paid, closed, id, type}) => {
 
+    const dispatch = useDispatch();
+
     const handleDeleteProject = () => {
-        swalConfirm('¿Seguro que quieres eliminar el Proyecto? Se borrarán todos los datos', 'Se ha eliminado el proyecto', () => {})
+        swalConfirm('¿Seguro que quieres eliminar el Proyecto? Se borrarán todos los datos', 'Se ha eliminado el proyecto', () => {
+            dispatch(startDeleteProject(id));
+        });
     }
 
     return (

@@ -12,7 +12,6 @@ export const swalConfirm = (title, confirmation, action) => {
             // action
             action();
 
-            Swal.fire(confirmation);
         }
         })
 }

@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { closeSidebar } from '../../actions/uiActions';
-import { projects } from '../../data/projects';
+import { scrolltoTop } from '../../helpers/scrollToTop';
 import { AddProjectBox } from '../projects/AddProjectBox';
 import { ProjectBox } from '../projects/ProjectBox';
 import Boxes from './Boxes';
 
 export const DashboardScreen = () => {
 
+    const projects = useSelector(state => state.projects);
+    const {loading} = useSelector(state => state.ui);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(closeSidebar());
-        document.querySelector("body").scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        scrolltoTop();
     }, [dispatch]);
 
     return (
@@ -35,7 +35,12 @@ export const DashboardScreen = () => {
                             <ProjectBox key={project.id} {...project} />
                         ))
                     )
-                    : <h4 className='shadow-text'>No tienes proyectos. ¡Crea uno! :(</h4>
+                    : loading ? (
+                        <h4 className='shadow-text'>Cargando...</h4>
+                    )
+                    : (
+                        <h4 className='shadow-text'>No tienes proyectos. ¡Crea uno! :(</h4>
+                    )
                 }
             </div>
             <div className="projects__btn-container">

@@ -7,3 +7,11 @@ export const openSiderbar = () => ({
 export const closeSidebar = () => ({
     type: types.closeSidebar
 });
+
+export const startLoading = () => ({
+    type: types.startLoading
+});
+
+export const stopLoading = () => ({
+    type: types.stopLoading
+});

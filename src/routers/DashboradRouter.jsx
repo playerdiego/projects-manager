@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router'
 import { AccountScreen } from '../components/account/AccountScreen'
@@ -14,12 +14,6 @@ import { Sidebar } from '../components/ui/Sidebar'
 export const DashboradRouter = () => {
 
     const {open} = useSelector(state => state.ui);
-    const auth = useSelector(state => state.auth);
-
-    useEffect(() => {
-        console.log(auth);
-    }, [])
-
     return (
         <div className="dashboard__container">
             <Header />

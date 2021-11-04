@@ -9,7 +9,7 @@ export const VerifiedScreen = () => {
         setTimeout(() => {
             history.replace('/');
         }, 4000);
-    }, [])
+    }, [history])
 
     return (
         <div className='auth__box'>

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
 import { login } from '../actions/authActions'
+import { startLoadProjects } from '../actions/projectsActions'
+import { Loading } from '../components/ui/Loading'
 import { AuthRouter } from './AuthRouter'
 import { DashboradRouter } from './DashboradRouter'
 import { PrivateRouter } from './PrivateRouter'
@@ -23,6 +25,8 @@ export const AppRouter = () => {
                 dispatch(login(user.displayName, user.email, user.uid, user.photoURL, user.emailVerified));
                 setIsAuth(true);
 
+                dispatch(startLoadProjects(user.uid));
+
             } else {
                 setIsAuth(false);
             }
@@ -32,7 +36,7 @@ export const AppRouter = () => {
     }, [dispatch]);
 
     if(cheking) {
-        return <h1>Loading...</h1>
+        return <Loading />
     }
 
     return (

@@ -6,6 +6,7 @@ import { closeSidebar } from '../../actions/uiActions';
 import { useForm } from '../../hooks/useForm';
 import { Form } from '../ui/Form';
 import ProfilePic from '../../assets/profile-pic.png';
+import { scrolltoTop } from '../../helpers/scrollToTop';
 
 export const AccountScreen = () => {
 
@@ -33,10 +34,7 @@ export const AccountScreen = () => {
 
     useEffect(() => {
         dispatch(closeSidebar());
-        document.querySelector("body").scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        scrolltoTop();
     }, [dispatch]);
 
     return (

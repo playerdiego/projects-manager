@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { projects } from '../../data/projects';
 import { getProjectsBudget, getProjectsPaid, getTasksLenght } from '../../helpers/getProjectsInfo';
 
 export default function Boxes() {
 
+    const projects = useSelector(state => state.projects);
+
     const [{tasks, budget, paid}, setProjectsData] = useState({
-        tasks: getTasksLenght(),
-        budget: getProjectsBudget(),
-        paid: getProjectsPaid(),
+        tasks: 0,
+        budget: 0,
+        paid: 0,
     });
 
     useEffect(() => {
         setProjectsData({
-            tasks: getTasksLenght(),
-            budget: getProjectsBudget(),
-            paid: getProjectsPaid(),
+            tasks: getTasksLenght(projects),
+            budget: getProjectsBudget(projects),
+            paid: getProjectsPaid(projects),
         });
-    }, []);
+    }, [projects]);
 
     return (
         <div className="dashboard__boxes">
