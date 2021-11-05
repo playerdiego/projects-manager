@@ -2,6 +2,7 @@ import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import { authReducer } from "../reducers/authReducer";
 import { projectsReducer } from "../reducers/projectsReducer";
+import { tasksReducer } from "../reducers/tasksReducer";
 import { uiReducer } from "../reducers/uiReducer";
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
@@ -9,7 +10,8 @@ const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOO
 const reducers = combineReducers({
     ui: uiReducer,
     auth: authReducer,
-    projects: projectsReducer
+    projects: projectsReducer,
+    tasks: tasksReducer
 });
 
 export const store = createStore(

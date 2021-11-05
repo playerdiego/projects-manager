@@ -10,7 +10,7 @@ export const startLoadProjects = (uid) => {
     return async (dispatch) => {
         
         dispatch(startLoading());
-        const projectsSnap = await getDocs(query(collection(db, uid), orderBy('date', 'desc')));
+        const projectsSnap = await getDocs(query(collection(db, uid, 'data', 'projects'), orderBy('date', 'desc')));
         const projects = [];
         
         projectsSnap.docs.forEach(snap => {
@@ -29,7 +29,7 @@ export const startAddProject = (project) => {
     return (dispatch) => {
         const auth = getAuth();
         swalLoading('Se esta añadiendo el Proyecto', 'Por favor, espere');
-        addDoc(collection(db, auth.currentUser.uid), project)
+        addDoc(collection(db, auth.currentUser.uid, 'data', 'projects'), project)
             .then(projectRef => {
                 Swal.fire(`Se ha Agregado el proyecto`, '', 'success');
                 Swal.close();
@@ -46,7 +46,7 @@ export const startUpdateProject = (projectID, project) => {
     return (dispatch) => {
         const auth = getAuth();
         swalLoading('Se esta actualizand la información del Proyecto', 'Por favor, espere');
-        updateDoc(doc(db, auth.currentUser.uid, projectID), project)
+        updateDoc(doc(db, auth.currentUser.uid, 'data', 'projects', projectID), project)
             .then(() => {
                 Swal.close();
                 dispatch(updateProject(projectID, project));
@@ -56,10 +56,19 @@ export const startUpdateProject = (projectID, project) => {
 }
 
 export const startDeleteProject = (projectID) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         const auth = getAuth();
         swalLoading('Se esta eliminando el Proyecto', 'Por favor, espere');
-        deleteDoc(doc(db, auth.currentUser.uid, projectID))
+
+        const tasksSnap = await getDocs(collection(db, auth.currentUser.uid, 'data', 'projects', projectID, 'tasks'));
+
+        tasksSnap.docs.forEach(snap => {
+            deleteDoc(doc(db, auth.currentUser.uid, 'data', 'projects', projectID, 'tasks', snap.id))
+                .catch(err => Swal.fire('Error', err.message, 'error'));
+        });
+        
+
+        deleteDoc(doc(db, auth.currentUser.uid, 'data', 'projects', projectID))
             .then(() => {
                 dispatch(deleteProject(projectID));
                 Swal.fire('Se ha eliminado el proyecto', '', 'success');

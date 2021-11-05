@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { tasks } from '../../data/tasks';
 import { getProjectById } from '../../helpers/getProjectById'
 import { useForm } from '../../hooks/useForm';
 import { TaskBox } from '../tasks/TaskBox';
@@ -15,15 +14,30 @@ import { scrolltoTop } from '../../helpers/scrollToTop';
 import { Loading } from '../ui/Loading';
 import { startDeleteProject } from '../../actions/projectsActions';
 import { useHistory } from 'react-router';
+import { getAuth } from '@firebase/auth';
+import { cleanTasks, startAddTask, startLoadTasks } from '../../actions/tasksActions';
 
 export const Project = ({match: {params: {projectID}}}) => {
 
     const [addTask, setAddTask] = useState(false);
     const [project, setProject] = useState(null);
+
+    const tasks = useSelector(state => state.tasks);
+    const {loading} = useSelector(state => state.ui);
     
     const history = useHistory()
     const projects = useSelector(state => state.projects);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const auth = getAuth();
+        dispatch(startLoadTasks(auth.currentUser.uid, projectID));
+
+        return () => {
+            dispatch(cleanTasks());
+        }
+    }, [dispatch, projectID])
+
     
     useEffect(() => {
         if(projects.length > 0) {
@@ -38,6 +52,16 @@ export const Project = ({match: {params: {projectID}}}) => {
 
     const handleAddTask = (e) => {
         e.preventDefault();
+
+        const task = {
+            title: taskName,
+            desc: '',
+            done: false,
+            deadLine: false,
+            date: new Date()
+        };
+
+        dispatch(startAddTask(projectID, task));
 
         setAddTask(false);
         reset();
@@ -99,9 +123,11 @@ export const Project = ({match: {params: {projectID}}}) => {
                     {
                         tasks.length > 0 ?
                         tasks.map(task => !task.done ? (
-                            <TaskBox key={task.id} {...task} />
+                            <TaskBox key={task.id} {...task} projectID={projectID} />
                         ): null)
-                        : (
+                        : loading ? (
+                            <h4 className='shadow-text'>Cargando...</h4>
+                        ) : (
                             <h4 className='shadow-text'>No tienes Tareas. ¡Crea una! :(</h4>
                         )
                     }
@@ -111,7 +137,7 @@ export const Project = ({match: {params: {projectID}}}) => {
                 <div className="tasks__container">
                     {
                         tasks.map(task => task.done ? (
-                            <TaskBox key={task.id} {...task} />
+                            <TaskBox key={task.id} {...task} projectID={projectID} />
                         ): null)
                     }
                 </div>

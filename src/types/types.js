@@ -13,4 +13,10 @@ export const types = {
     updateProject : '[Project] Update Project',
     loadProjects : '[Project] Load Projects',
     cleanProjects : '[Project] Clean Projects',
+
+    addTask: '[Task] Add Task',
+    deleteTask: '[Task] Delete Task',
+    updateTask: '[Task] Update Task',
+    loadTasks: '[Task] Load Tasks',
+    cleanTasks: '[Task] Clean Tasks',
 }

@@ -34,8 +34,7 @@ export const AddProjectForm = ({setAddProject}) => {
                 name,
                 budget: parseFloat(budget),
                 paid: parseFloat(paid),
-                passwords,
-                tasks: [],
+                passwords: !passwords ? false : [],
                 closed: false,
                 date: new Date()
             };
@@ -48,8 +47,14 @@ export const AddProjectForm = ({setAddProject}) => {
 
     const checkForm = () => {
 
-        if(paid > 100) {
+        if(name === '' || budget === '') {
+            Swal.fire('Todos los campos son obligatorios', '', 'error');
+            return false;
+        } else if(paid > 100) {
             Swal.fire('El Porcentaje pagado no puede ser mayor a 100', '', 'error');
+            return false;
+        } else if(paid === '') {
+            Swal.fire('Debes Seleccionar un Porcentaje', '', 'error');
             return false;
         }
 
@@ -66,7 +71,6 @@ export const AddProjectForm = ({setAddProject}) => {
                     value={name}
                     onChange={handleInputChange}
                     placeholder='Nombre del Proyecto'
-                    required
                     />
                 <input
                     type='text'
@@ -74,7 +78,6 @@ export const AddProjectForm = ({setAddProject}) => {
                     value={budget}
                     placeholder='Presupuesto: (Ej: 500)'
                     onChange={(e) => onlyNumber(e, handleInputChange)}
-                    required
                     />
                 <select
                     name="paid"
@@ -84,7 +87,8 @@ export const AddProjectForm = ({setAddProject}) => {
                     onChange={handleInputChange}
                     required
                 >
-                    <option selected hidden>% Completado</option>
+                    <option defaultValue hidden>% Completado</option>
+                    <option value="0">0%</option>
                     <option value="10">10%</option>
                     <option value="20">20%</option>
                     <option value="30">30%</option>

@@ -1,8 +1,12 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { startDeleteTask } from '../../actions/tasksActions'
 import { swalConfirm } from '../../helpers/swalConfirm'
 
 export const TaskBox = ({title, id, projectID, done}) => {
+
+    const dispatch = useDispatch();
 
     const handleToggleStatus = () => {
         swalConfirm(
@@ -13,7 +17,9 @@ export const TaskBox = ({title, id, projectID, done}) => {
     }
 
     const handleDeleteTask = () => {
-        swalConfirm('¿Seguro que quieres eliminar la Tarea? Se borrarán todos los datos', 'Se ha eliminado la Tarea', () => {});
+        swalConfirm('¿Seguro que quieres eliminar la Tarea? Se borrarán todos los datos', 'Se ha eliminado la Tarea', () => {
+            dispatch(startDeleteTask(projectID, id));
+        });
     }
 
     return (

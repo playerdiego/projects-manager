@@ -1,12 +1,28 @@
-import React from 'react'
+import { getAuth } from '@firebase/auth'
+import { collection, getDocs } from '@firebase/firestore'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { startDeleteProject } from '../../actions/projectsActions'
+import { db } from '../../firesbase/firebase-config'
 import { swalConfirm } from '../../helpers/swalConfirm'
 
-export const ProjectBox = ({name, tasks, budget, paid, closed, id, passwords}) => {
+export const ProjectBox = ({name, budget, paid, closed, id, passwords}) => {
 
     const dispatch = useDispatch();
+
+    const [tasksLength, setTasksLength] = useState(0);
+
+    const auth = getAuth();
+
+    useEffect(() => {
+        const getTasks = async () => {
+            const tasksSnap = await getDocs(collection(db, auth.currentUser.uid, 'data', 'projects', id, 'tasks'));
+    
+            setTasksLength(tasksSnap.docs.length);
+        }
+        getTasks();
+    }, [id, auth.currentUser.uid])
 
     const handleDeleteProject = () => {
         swalConfirm('¿Seguro que quieres eliminar el Proyecto? Se borrarán todos los datos', 'Se ha eliminado el proyecto', () => {
@@ -26,7 +42,7 @@ export const ProjectBox = ({name, tasks, budget, paid, closed, id, passwords}) =
                         }
                     </h3>
             
-                    <p className='color-blue'>Tareas: {tasks.length}</p>
+                    <p className='color-blue'>Tareas: {tasksLength}</p>
                     <p className='color-green'>Presupuesto: {budget}$</p>
                     <p className='color-light-green'>Pagado: {paid}% ({budget * (paid / 100)}$)</p>
                     <p className='color-red'>Por Pagar: {100 - paid}% ({budget * ((100 - paid) / 100)}$)</p>

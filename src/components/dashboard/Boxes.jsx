@@ -1,21 +1,19 @@
 import React, {useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getProjectsBudget, getProjectsPaid, getTasksLenght } from '../../helpers/getProjectsInfo';
+import { getProjectsBudget, getProjectsPaid } from '../../helpers/getProjectsInfo';
 
 export default function Boxes() {
 
     const projects = useSelector(state => state.projects);
 
-    const [{tasks, budget, paid}, setProjectsData] = useState({
-        tasks: 0,
+    const [{budget, paid}, setProjectsData] = useState({
         budget: 0,
         paid: 0,
     });
 
     useEffect(() => {
         setProjectsData({
-            tasks: getTasksLenght(projects),
             budget: getProjectsBudget(projects),
             paid: getProjectsPaid(projects),
         });
@@ -26,9 +24,9 @@ export default function Boxes() {
 
             <Link to='/projects' className="dashboard__box projects">
                 <div className="dashboard__box-main">
-                    <h3>{projects.length} Proyectos</h3>
+                    <h3>{projects.length}</h3>
 
-                    <p>{tasks} Tareas</p>
+                    <p>{projects.length > 1 ? 'Proyectos' : 'Proyecto'}</p>
                 </div>
                 <div className="dashboard__box-icon">
                     <i className="fas fa-briefcase"></i>

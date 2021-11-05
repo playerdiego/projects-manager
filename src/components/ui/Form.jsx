@@ -7,6 +7,7 @@ export const Form = ({className = '', handleSubmit, handleInputChange, setter, n
             onSubmit={handleSubmit}
         >
             <input
+                autoFocus
                 type={type}
                 name={name}
                 onChange={handleInputChange}
