@@ -9,18 +9,18 @@ export const AddProjectForm = ({setAddProject}) => {
 
     const dispatch = useDispatch();
 
-    const [{name, budget, paid, passwords}, handleInputChange, reset] = useForm({
+    const [{name, budget, paid, passwordsPanel}, handleInputChange, reset] = useForm({
         name: '',
         budget: '',
         paid: '',
-        passwords: false,
+        passwordsPanel: false,
     });
 
     const togglePasswords = (e) => {
         handleInputChange({
             target: {
                 name: e.target.name,
-                value: !passwords
+                value: !passwordsPanel
             }
         });
     };
@@ -34,7 +34,7 @@ export const AddProjectForm = ({setAddProject}) => {
                 name,
                 budget: parseFloat(budget),
                 paid: parseFloat(paid),
-                passwords: !passwords ? false : [],
+                passwordsPanel: passwordsPanel,
                 closed: false,
                 date: new Date()
             };
@@ -104,8 +104,8 @@ export const AddProjectForm = ({setAddProject}) => {
                     <input
                         type="checkbox"
                         id='contraseñas'
-                        name='passwords'
-                        checked={passwords}
+                        name='passwordsPanel'
+                        checked={passwordsPanel}
                         onChange={togglePasswords} /> Panel de Contraseñas
                 </label>
                 <div className='password__buttons'>

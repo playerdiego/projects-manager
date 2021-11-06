@@ -30,13 +30,13 @@ export const startAddTask = (projectID, task) => {
         const auth = getAuth();
         swalLoading('Se esta añadiendo la Tarea', 'Por favor, espere');
         addDoc(collection(db, auth.currentUser.uid, 'data', 'projects', projectID, 'tasks'), task)
-            .then(projectRef => {
+            .then(taskRef => {
                 Swal.fire(`Se ha Agregado la Tarea`, '', 'success');
                 Swal.close();
                 
                 const newTask = {
                     ...task,
-                    id: projectRef.id
+                    id: taskRef.id
                 }
 
                 dispatch(addTask(newTask));

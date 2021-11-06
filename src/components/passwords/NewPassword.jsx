@@ -1,7 +1,15 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
+import { startAddPassword } from '../../actions/passwordsActions';
 import { useForm } from '../../hooks/useForm';
+import CryptoJS from 'crypto-js';
 
-export const NewPassword = () => {
+export const NewPassword = ({projectID}) => {
+
+    const key = 'cosmos';
+
+    const dispatch = useDispatch();
 
     const [addPassword, setAddPassword] = useState(false);
 
@@ -15,8 +23,29 @@ export const NewPassword = () => {
     const handleAddPassword = (e) => {
         e.preventDefault();
 
-        setAddPassword(false);
-        reset();
+        if(checkForm()) {
+            dispatch(startAddPassword(projectID, {
+                title,
+                url,
+                username,
+                password: CryptoJS.AES.encrypt(password, key).toString(),
+                date: new Date()
+            }));
+            setAddPassword(false);
+            reset();
+        }
+        
+    }
+
+    const checkForm = () => {
+
+        if(title === '' || url === '' || username === '' || password === '') {
+            Swal.fire('Todos los campos son obligatorios', '', 'error');
+            return false
+        }
+
+        return true;
+
     }
 
     return (
@@ -41,7 +70,6 @@ export const NewPassword = () => {
                             value={title}
                             onChange={handleInputChange}
                             placeholder='Título'
-                            required
                             />
                         <input
                             type='text'
@@ -49,7 +77,6 @@ export const NewPassword = () => {
                             value={url}
                             onChange={handleInputChange}
                             placeholder='URL'
-                            required
                             />
                         <input
                             type='text'
@@ -57,7 +84,6 @@ export const NewPassword = () => {
                             value={username}
                             onChange={handleInputChange}
                             placeholder='Username/Email'
-                            required
                             />
                         <input
                             type='password'
@@ -65,7 +91,6 @@ export const NewPassword = () => {
                             value={password}
                             onChange={handleInputChange}
                             placeholder='Contraseña'
-                            required
                             />
                         <div className='password__buttons'>
                             <button

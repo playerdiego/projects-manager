@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { swalConfirm } from '../../helpers/swalConfirm';
 import { useDispatch } from 'react-redux';
 import { startUpdateProject } from '../../actions/projectsActions';
+import { startDeleteAllPasswords } from '../../actions/passwordsActions';
 
 export const ProjectHeader = ({project}) => {
 
@@ -14,7 +15,7 @@ export const ProjectHeader = ({project}) => {
 
     const dispatch = useDispatch();
     
-    const [{name, budget, paid, passwords}, handleInputChange] = useForm({
+    const [{name, budget, paid, passwordsPanel}, handleInputChange] = useForm({
         ...project
     });
 
@@ -25,7 +26,7 @@ export const ProjectHeader = ({project}) => {
             name,
             budget: parseFloat(budget),
             paid: parseFloat(paid),
-            passwords
+            passwordsPanel
         }));
 
         setEditTitle(false);
@@ -44,7 +45,7 @@ export const ProjectHeader = ({project}) => {
 
     const handleActivePasswords = (e) => {
         Swal.fire({
-            title: passwords ? '¿Quieres eliminar el panel de contraseñas? ¡Se eliminarán todas!' : '¿Quieres añadir el panel de contraseñas?',
+            title: passwordsPanel ? '¿Quieres eliminar el panel de contraseñas? ¡Se eliminarán todas!' : '¿Quieres añadir el panel de contraseñas?',
             showDenyButton: true,
             confirmButtonText: 'Si',
             denyButtonText: `No`,
@@ -54,15 +55,20 @@ export const ProjectHeader = ({project}) => {
                 handleInputChange({
                     target: {
                         name: e.target.name,
-                        value: !passwords
+                        value: !passwordsPanel
                     }
                 });
+                
+                if(passwordsPanel) {
+                    dispatch(startDeleteAllPasswords(project.id));
+                }
 
                 dispatch(startUpdateProject(project.id, {
-                    passwords: !passwords
+                    passwordsPanel: !passwordsPanel
                 }));
 
-                Swal.fire(!passwords ? 'Se ha añadido el panel de contraseñas' : 'Se ha eliminado el panel de contraseñas', '', 'success');
+
+                Swal.fire(!passwordsPanel ? 'Se ha añadido el panel de contraseñas' : 'Se ha eliminado el panel de contraseñas', '', 'success');
             }
           })
     }
@@ -160,8 +166,8 @@ export const ProjectHeader = ({project}) => {
                     <input
                         type="checkbox"
                         id='contraseñas'
-                        name='passwords'
-                        checked={passwords}
+                        name='passwordsPanel'
+                        checked={passwordsPanel}
                         onChange={handleActivePasswords} /> Panel de Contraseñas
                 </label>
                 <button className={project.closed ? 'task__status project__status btn completed' : 'task__status project__status btn'} onClick={handleCloseProject}>

@@ -16,6 +16,7 @@ import { startDeleteProject } from '../../actions/projectsActions';
 import { useHistory } from 'react-router';
 import { getAuth } from '@firebase/auth';
 import { cleanTasks, startAddTask, startLoadTasks } from '../../actions/tasksActions';
+import { cleanPasswords, startLoadPasswords } from '../../actions/passwordsActions';
 
 export const Project = ({match: {params: {projectID}}}) => {
 
@@ -23,6 +24,7 @@ export const Project = ({match: {params: {projectID}}}) => {
     const [project, setProject] = useState(null);
 
     const tasks = useSelector(state => state.tasks);
+    const passwords = useSelector(state => state.passwords);
     const {loading} = useSelector(state => state.ui);
     
     const history = useHistory()
@@ -33,8 +35,12 @@ export const Project = ({match: {params: {projectID}}}) => {
         const auth = getAuth();
         dispatch(startLoadTasks(auth.currentUser.uid, projectID));
 
+
+        dispatch(startLoadPasswords(auth.currentUser.uid, projectID));
+
         return () => {
             dispatch(cleanTasks());
+            dispatch(cleanPasswords());
         }
     }, [dispatch, projectID])
 
@@ -144,8 +150,8 @@ export const Project = ({match: {params: {projectID}}}) => {
 
 
                 {
-                    project.passwords &&
-                    <Passwords />
+                    project.passwordsPanel &&
+                    <Passwords passwords={passwords} projectID={project.id}  />
                 }
 
                 <Delete action={handleDeleteProject} />

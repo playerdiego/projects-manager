@@ -1,9 +1,12 @@
 import React from 'react'
-import { passwords } from '../../data/passwords';
+import { useSelector } from 'react-redux';
 import { NewPassword } from './NewPassword';
 import { PasswordBox } from './PasswordBox';
 
-export const Passwords = () => {
+export const Passwords = ({passwords, projectID}) => {
+
+    const {loading} = useSelector(state => state.ui)
+
     return (
         <>
             <hr />
@@ -11,13 +14,18 @@ export const Passwords = () => {
 
             <div className='passwords__container'>
 
-                <NewPassword />
+                <NewPassword projectID={projectID} />
 
                 {
-                    passwords.length > 0 &&
+                    passwords.length > 0 ?
                     passwords.map(pass => (
-                        <PasswordBox key={pass.id} {...pass} />
+                        <PasswordBox key={pass.id} {...pass} projectID={projectID} />
                     ))
+                    : loading ? (
+                        <h4 className='shadow-text'>Cargando...</h4>
+                    ) : (
+                        <h4 className='shadow-text'>No tienes Contraseñas. ¡Crea una! :(</h4>
+                    )
                 }
             </div>
         </>

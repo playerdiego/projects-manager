@@ -67,6 +67,13 @@ export const startDeleteProject = (projectID) => {
                 .catch(err => Swal.fire('Error', err.message, 'error'));
         });
         
+        const passwordsSnap = await getDocs(collection(db, auth.currentUser.uid, 'data', 'projects', projectID, 'passwords'));
+
+        passwordsSnap.docs.forEach(snap => {
+            deleteDoc(doc(db, auth.currentUser.uid, 'data', 'projects', projectID, 'passwords', snap.id))
+                .catch(err => Swal.fire('Error', err.message, 'error'));
+        });
+        
 
         deleteDoc(doc(db, auth.currentUser.uid, 'data', 'projects', projectID))
             .then(() => {

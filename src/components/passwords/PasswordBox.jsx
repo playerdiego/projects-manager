@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { startDeletePassword, startUpdatePassword } from '../../actions/passwordsActions';
+import { swalConfirm } from '../../helpers/swalConfirm';
 import { useForm } from '../../hooks/useForm';
 import { Form } from '../ui/Form';
+import CryptoJS from 'crypto-js';
 
-export const PasswordBox = ({title, url, username, password}) => {
+export const PasswordBox = ({title, url, username, password, id, projectID}) => {
+
+    const key = 'cosmos';
+
+    const dispatch = useDispatch();
 
     const [showPass, setShowPass] = useState(false);
     
@@ -36,6 +44,13 @@ export const PasswordBox = ({title, url, username, password}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        dispatch(startUpdatePassword(projectID, id, {
+            title: passwordValues.title,
+            url: passwordValues.url,
+            username: passwordValues.username,
+            password: CryptoJS.AES.encrypt(passwordValues.password, key).toString()
+        }))
+
         setEditTitle(false);
         setEditURL(false);
         setEditUser(false);
@@ -43,7 +58,9 @@ export const PasswordBox = ({title, url, username, password}) => {
     }
 
     const handleDeletePassword = () => {
-
+        swalConfirm('¿Quiere eliminar la contraseña?', '', () => {
+            dispatch(startDeletePassword(projectID, id));
+        })
     }
 
     const handleCopy = (text, e) => {

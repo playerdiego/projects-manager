@@ -19,4 +19,10 @@ export const types = {
     updateTask: '[Task] Update Task',
     loadTasks: '[Task] Load Tasks',
     cleanTasks: '[Task] Clean Tasks',
+
+    addPassword: '[Password] Add Password',
+    deletePassword: '[Password] Delete Password',
+    updatePassword: '[Password] Update Password',
+    loadPasswords: '[Password] Load Passwords',
+    cleanPasswords: '[Password] Clean Passwords',
 }

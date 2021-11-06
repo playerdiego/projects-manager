@@ -7,7 +7,7 @@ import { startDeleteProject } from '../../actions/projectsActions'
 import { db } from '../../firesbase/firebase-config'
 import { swalConfirm } from '../../helpers/swalConfirm'
 
-export const ProjectBox = ({name, budget, paid, closed, id, passwords}) => {
+export const ProjectBox = ({name, budget, paid, closed, id, passwordsPanel}) => {
 
     const dispatch = useDispatch();
 
@@ -49,7 +49,7 @@ export const ProjectBox = ({name, budget, paid, closed, id, passwords}) => {
                 </div>
                 <span className="dashboard__box-footer">Ver proyecto <i className="fas fa-arrow-circle-right"></i></span>
                 {
-                    passwords &&
+                    passwordsPanel &&
                     <i className='fas fa-key'></i>
                 }
             </Link>
