@@ -20,8 +20,9 @@
     font-weight: bolder;
 }
 
-.task__breadcrumb a {
+.task__breadcrumb span {
     color: darken($color-shadow, 10);
+    cursor: pointer;
 }
 
 .task__btn {

@@ -1,5 +1,5 @@
 import { getAuth } from "@firebase/auth";
-import { addDoc, collection, deleteDoc, doc, getDocs, orderBy, query } from "@firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, orderBy, query, updateDoc } from "@firebase/firestore";
 import Swal from "sweetalert2";
 import { db } from "../firesbase/firebase-config";
 import { swalLoading } from "../helpers/swalLoading";
@@ -45,6 +45,19 @@ export const startAddTask = (projectID, task) => {
     }
 }
 
+export const startUpdateTask = (projectID, taskID, task) => {
+    return (dispatch) => {
+        const auth = getAuth();
+        swalLoading('Se esta actualizando la información de la Tarea', 'Por favor, espere');
+        updateDoc(doc(db, auth.currentUser.uid, 'data', 'projects', projectID, 'tasks', taskID), task)
+            .then(() => {
+                Swal.close();
+                dispatch(updateTask(taskID, task));
+            })
+            .catch(err => Swal.fire('Error', err.message, 'error'))
+    }
+}
+
 export const startDeleteTask = (projectID, taskID) => {
     return (dispatch) => {
         const auth = getAuth();
@@ -68,6 +81,14 @@ export const loadTasks = (tasks) => ({
 export const addTask = (task) => ({
     type: types.addTask,
     payload: task
+});
+
+export const updateTask = (taskID, task) => ({
+    type: types.updateTask,
+    payload: {
+        taskID,
+        task
+    }
 });
 
 export const deleteTask = (taskID) => ({

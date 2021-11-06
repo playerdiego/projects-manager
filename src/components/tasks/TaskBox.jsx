@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { startDeleteTask } from '../../actions/tasksActions'
+import { startDeleteTask, startUpdateTask } from '../../actions/tasksActions'
 import { swalConfirm } from '../../helpers/swalConfirm'
 
 export const TaskBox = ({title, id, projectID, done}) => {
@@ -12,7 +12,11 @@ export const TaskBox = ({title, id, projectID, done}) => {
         swalConfirm(
             done ? '¿Seguro que quieres marcar esta tarea como "Por Completar"?' : '¿Seguro que quieres marcar esta tarea como "Completada"?',
             done ? 'La Tarea se ha marcado como "Completada"' : 'La Tarea se ha marcado como "Por Completar"',
-            () => {}
+            () => {
+                dispatch(startUpdateTask(projectID, id, {
+                    done: !done
+                }));
+            }
             )
     }
 

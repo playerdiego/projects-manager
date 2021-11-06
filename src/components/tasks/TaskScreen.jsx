@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import { getProjectById } from '../../helpers/getProjectById';
 import { getTaskById } from '../../helpers/getTaskById'
 import { TaskHeader } from './TaskHeader';
@@ -7,38 +7,79 @@ import { closeSidebar } from '../../actions/uiActions';
 import { useDispatch } from 'react-redux';
 import { swalConfirm } from '../../helpers/swalConfirm';
 import { Delete } from '../ui/Delete';
+import { useSelector } from 'react-redux';
+import { scrolltoTop } from '../../helpers/scrollToTop';
+import { Loading } from '../ui/Loading';
+import { cleanTasks, startDeleteTask, startLoadTasks, startUpdateTask } from '../../actions/tasksActions';
+import { getAuth } from '@firebase/auth';
+import { useHistory } from 'react-router';
 
-export const TaskScreen = ({match: {params: {taskID}}}) => {
+export const TaskScreen = ({match: {params: {taskID, projectID}}}) => {
 
-    const task = getTaskById(taskID);
-    const project = getProjectById(task.projectID);
-    const editorRef = useRef(Editor);
-
-    const handleEditChange = () => {
-        // console.log(editorRef.current.getContent());
-    }
-
-    // const handleUploadTask = () => {
-
-    // }
+    const tasks = useSelector(state => state.tasks);
+    const projects = useSelector(state => state.projects);
 
     const dispatch = useDispatch();
+    const history = useHistory();
+
+    const [task, setTask] = useState(null);
+    const [project, setProject] = useState(null);
+    
+    const [desc, setDesc] = useState('');
+
+    const editorRef = useRef(Editor);
+
+    useEffect(() => {
+        const auth = getAuth();
+        dispatch(startLoadTasks(auth.currentUser.uid, projectID));
+
+        return () => {
+            dispatch(cleanTasks());
+        }
+    }, [dispatch, projectID])
+
+    useEffect(() => {
+        if(tasks.length > 0) {
+            setTask(getTaskById(taskID, tasks));
+            setProject(getProjectById(projectID, projects));
+        }
+    }, [tasks, taskID, projectID, projects]);
+
+    useEffect(() => {
+        if(task) {
+            setDesc(task.desc);
+        }
+    }, [task])
+
+    const handleEditChange = () => {
+        setDesc(editorRef.current.getContent());
+    }
+
+    const handleUploadTask = () => {
+        dispatch(startUpdateTask(projectID, taskID, {
+            desc: editorRef.current.getContent()
+        }));
+    }
 
     useEffect(() => {
         dispatch(closeSidebar());
-        document.querySelector("body").scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        scrolltoTop();
     }, [dispatch]);
 
     const handleDeleteTask = () => {
-        swalConfirm('¿Seguro que quieres eliminar la Tarea? Se borrarán todos los datos', 'Se ha eliminado la Tarea', () => {});
+        swalConfirm('¿Seguro que quieres eliminar la Tarea? Se borrarán todos los datos', 'Se ha eliminado la Tarea', () => {
+            dispatch(startDeleteTask(projectID, taskID));
+            history.replace(`/project/${projectID}`);
+        });
+    }
+
+    if (task === null) {
+        return <Loading />
     }
 
     return (
         <>
-            <TaskHeader task={task} project={project} />
+            <TaskHeader task={task} project={project} desc={desc} />
 
             <Editor
                 onInit={(evt, editor) => editorRef.current = editor}
@@ -60,7 +101,7 @@ export const TaskScreen = ({match: {params: {taskID}}}) => {
                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px; }'
                 }}
             />
-            <button className='btn task__btn'>Guardar</button>
+            <button className='btn task__btn' onClick={handleUploadTask}>Guardar</button>
             <Delete action={handleDeleteTask} />
         </>
     )

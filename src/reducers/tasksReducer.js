@@ -15,6 +15,12 @@ export const tasksReducer = (state = initialState, action) => {
                 ...state
             ]
         }
+        case types.updateTask: {
+            return state.map(task => task.id !== action.payload.taskID ? task : {
+                ...task,
+                ...action.payload.task
+            });
+        }
         case types.deleteTask: {
             return state.filter(task => task.id !== action.payload)
         }

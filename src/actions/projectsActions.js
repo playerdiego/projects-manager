@@ -45,7 +45,7 @@ export const startAddProject = (project) => {
 export const startUpdateProject = (projectID, project) => {
     return (dispatch) => {
         const auth = getAuth();
-        swalLoading('Se esta actualizand la información del Proyecto', 'Por favor, espere');
+        swalLoading('Se esta actualizando la información del Proyecto', 'Por favor, espere');
         updateDoc(doc(db, auth.currentUser.uid, 'data', 'projects', projectID), project)
             .then(() => {
                 Swal.close();
