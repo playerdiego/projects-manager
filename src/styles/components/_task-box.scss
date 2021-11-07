@@ -72,3 +72,17 @@
 .task__box:hover i.fa-times {
     opacity: 1;
 }
+
+@media only screen and(max-width: 992px) {
+    .tasks__container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+    }
+}
+
+@media only screen and(max-width: 768px) {
+    .tasks__container {
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 30px 20px;
+    }
+}
