@@ -2,6 +2,7 @@ import { getAuth, sendPasswordResetEmail } from '@firebase/auth';
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2';
+import { swalLoading } from '../../helpers/swalLoading';
 import { useForm } from '../../hooks/useForm';
 
 export const RecoverScreen = () => {
@@ -15,8 +16,10 @@ export const RecoverScreen = () => {
 
         const auth = getAuth();
         auth.languageCode = 'es';
+        swalLoading('Se está enviando el correo de verificación', 'Por favor, espera');
         sendPasswordResetEmail(auth, email)
             .then(() => {
+                Swal.close();
                 Swal.fire('Se ha enviado el enlace de recuperación', `Revisa tu correo ${email}`, 'success');
                 reset();
             })

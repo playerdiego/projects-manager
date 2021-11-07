@@ -1,10 +1,8 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 import { LoginScreen } from '../components/auth/LoginScreen'
-import { RecoverFormScreen } from '../components/auth/RecoverFormScreen'
 import { RecoverScreen } from '../components/auth/RecoverScreen'
 import { RegisterScreen } from '../components/auth/RegisterScreen'
-import { VerifiedScreen } from '../components/auth/VerifiedScreen'
 
 export const AuthRouter = () => {
     return (
@@ -13,8 +11,6 @@ export const AuthRouter = () => {
                 <Route path='/auth/login' component={LoginScreen} />
                 <Route path='/auth/register' component={RegisterScreen} />
                 <Route path='/auth/recover' component={RecoverScreen} />
-                <Route path='/auth/recover-form' component={RecoverFormScreen} />
-                <Route path='/auth/verified' component={VerifiedScreen} />
 
                 <Redirect to='/auth/login' />
             </Switch>

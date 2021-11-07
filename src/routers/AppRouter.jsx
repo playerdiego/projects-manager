@@ -4,11 +4,13 @@ import { useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
 import { login } from '../actions/authActions'
 import { startLoadProjects } from '../actions/projectsActions'
+import { ActionEmailScreen } from '../components/auth/ActionEmailScreen'
 import { Loading } from '../components/ui/Loading'
 import { AuthRouter } from './AuthRouter'
 import { DashboradRouter } from './DashboradRouter'
 import { PrivateRouter } from './PrivateRouter'
 import { PublicRouter } from './PublicRouter'
+import { Route } from 'react-router'
 
 
 export const AppRouter = () => {
@@ -42,9 +44,14 @@ export const AppRouter = () => {
     return (
         <Router>
             <Switch>
+
+
+                <Route exact path='/auth/action' component={ActionEmailScreen} />
                 <PublicRouter path='/auth' component={AuthRouter} isAuth={isAuth} />
 
+
                 <PrivateRouter path='/' component={DashboradRouter} isAuth={isAuth} />
+
 
                 <Redirect to='/auth' />
             </Switch>

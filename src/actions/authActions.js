@@ -109,7 +109,7 @@ export const startUpdateEmail = (email, setter, setReAuth) => {
 
         updateEmail(auth.currentUser, email)
             .then(() => {
-                disptach(updateProfileInfo({email}));
+                disptach(updateProfileInfo({email, emailVerified: false}));
                 Swal.close();
                 setter(false);
                 setReAuth({status: false, action: null});
