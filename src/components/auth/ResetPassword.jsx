@@ -18,6 +18,7 @@ export const ResetPassword = ({code}) => {
 
     const history = useHistory();
     const auth = getAuth();
+    auth.languageCode = 'es';
 
     useEffect(() => {
         verifyPasswordResetCode(auth, code)

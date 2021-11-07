@@ -9,6 +9,7 @@ import { startLogout } from '../../actions/authActions';
 export const RecoverEmail = ({code}) => {
 
     const auth = getAuth();
+    auth.languageCode = 'es';
     const dispatch = useDispatch();
     
     const [message, setMessage] = useState({

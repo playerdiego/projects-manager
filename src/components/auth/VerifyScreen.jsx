@@ -12,7 +12,8 @@ export const VerifiyScreen = ({code}) => {
     });
 
     const auth = getAuth();
-
+    auth.languageCode = 'es';
+    
     useEffect(() => {
         applyActionCode(auth, code)
             .then(() => {

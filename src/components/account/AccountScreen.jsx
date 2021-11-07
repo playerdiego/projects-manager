@@ -20,8 +20,8 @@ export const AccountScreen = () => {
     const dispatch = useDispatch();
 
     const auth = getAuth();
-    console.log(auth.currentUser.providerData[0].providerId);
-
+    auth.languageCode = 'es';
+    
     const {displayName, email, photoURL} = useSelector(state => state.auth);
 
     const [userValues, handleInputChange] = useForm({displayName, email});

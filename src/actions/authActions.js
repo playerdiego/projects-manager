@@ -71,6 +71,7 @@ export const startLogout = () => {
         swalLoading('Cerrando Sesión', 'Por favor, espere');
 
         const auth = getAuth();
+        auth.languageCode = 'es';
         signOut(auth).then(() => {
             dispatch(logout());
             Swal.close();
@@ -89,7 +90,7 @@ export const startUpdateProfile = (user, setter) => {
         swalLoading('Actualizando Perfil', 'Por favor, espere');
 
         const auth = getAuth();
-
+        auth.languageCode = 'es';
         updateProfile(auth.currentUser, user)
             .then(() => {
                 dispatch(updateProfileInfo(user));
@@ -106,7 +107,7 @@ export const startUpdateEmail = (email, setter, setReAuth) => {
     return (disptach) => {
         swalLoading('Actualizando Email', 'Por favor, espere');
         const auth = getAuth();
-
+        auth.languageCode = 'es';
         updateEmail(auth.currentUser, email)
             .then(() => {
                 disptach(updateProfileInfo({email, emailVerified: false}));
@@ -128,7 +129,7 @@ export const startUpdatePhoto = (file, setter) => {
     return async (dispatch) => {
         
         const auth = getAuth();
-
+        auth.languageCode = 'es';
         swalLoading('Actualizando Foto de Perfil', 'Por favor, espere');
         const imageRef = ref(storage, 'profilePictures/' + auth.currentUser.displayName);
 
@@ -153,6 +154,7 @@ export const startUpdatePhoto = (file, setter) => {
 export const startUpdatePassword = (password, setter) => {
     return () => {
         const auth = getAuth();
+        auth.languageCode = 'es';
         swalLoading('Actualizando Contraseña', 'Por favor, espere');
         updatePassword(auth.currentUser, password)
             .then(() => {
@@ -170,7 +172,7 @@ export const startDeleteAccount = () => {
         swalLoading('Eliminando Cuenta', 'Por favor, espere');
 
         const auth = getAuth();
-
+        auth.languageCode = 'es';
         const projectsSnap = await getDocs(collection(db, auth.currentUser.uid, 'data', 'projects'));
         
         projectsSnap.docs.forEach(snap => {
