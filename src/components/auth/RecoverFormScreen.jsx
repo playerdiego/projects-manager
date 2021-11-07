@@ -14,7 +14,6 @@ export const RecoverFormScreen = () => {
         e.preventDefault();
 
         const auth = getAuth();
-        console.log(auth);
         auth.languageCode = 'es';
 
         reset();

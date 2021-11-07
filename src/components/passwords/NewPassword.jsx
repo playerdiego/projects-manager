@@ -7,8 +7,6 @@ import CryptoJS from 'crypto-js';
 
 export const NewPassword = ({projectID}) => {
 
-    const key = 'cosmos';
-
     const dispatch = useDispatch();
 
     const [addPassword, setAddPassword] = useState(false);
@@ -28,7 +26,7 @@ export const NewPassword = ({projectID}) => {
                 title,
                 url,
                 username,
-                password: CryptoJS.AES.encrypt(password, key).toString(),
+                password: CryptoJS.AES.encrypt(password, 'cosmos').toString(),
                 date: new Date()
             }));
             setAddPassword(false);

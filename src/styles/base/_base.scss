@@ -167,10 +167,6 @@ input {
 .form__buttons-container {
     display: inline-flex;
     z-index: 10000000;
-    
-    & button {
-        z-index: 10000000;
-    }
 }
 
 .errorForm__container {

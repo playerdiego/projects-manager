@@ -1,8 +1,10 @@
-import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile } from "@firebase/auth";
+import { createUserWithEmailAndPassword, deleteUser, getAuth, sendEmailVerification, signInWithEmailAndPassword, signOut, updateEmail, updatePassword, updateProfile } from "@firebase/auth";
+import { collection, deleteDoc, doc, getDocs } from "@firebase/firestore";
 import Swal from "sweetalert2";
-import { githubAuthProvider, googleAuthProvider } from "../firesbase/firebase-config";
+import { db, githubAuthProvider, googleAuthProvider } from "../firesbase/firebase-config";
 import { signInPopup } from "../helpers/signInPopup";
 import { swalLoading } from "../helpers/swalLoading";
+import { fileUpload } from "../helpers/uploadFile";
 import { types } from "../types/types";
 import { cleanProjects } from "./projectsActions";
 
@@ -79,13 +81,116 @@ export const startLogout = () => {
     }
 }
 
+export const startUpdateProfile = (user, setter) => {
+    return (dispatch) => {
+
+        swalLoading('Actualizando Perfil', 'Por favor, espere');
+
+        const auth = getAuth();
+        updateProfile(auth.currentUser, user)
+            .then(() => {
+                dispatch(updateProfileInfo(user));
+                Swal.close();
+                Swal.fire('Se ha actualizado el nombre de usuario', '', 'success');
+                setter(false);
+            }).catch(err => {
+                Swal.fire('Error', err.message, 'error');
+            })
+    }
+}
+
+export const startUpdateEmail = (email, setter) => {
+    return (disptach) => {
+        swalLoading('Actualizando Email', 'Por favor, espere');
+        const auth = getAuth();
+
+        updateEmail(auth.currentUser, email)
+            .then(() => {
+                disptach(updateProfileInfo({email}));
+                Swal.close();
+                setter(false);
+                sendEmailVerification(auth.currentUser)
+                .then(() => {
+                    Swal.fire('Se ha enviado el enlace de verificación', `Revisa tu correo ${email}`, 'success');
+                });
+            }).catch(err => {
+                Swal.fire('Error', err.message, 'error');
+            })
+    }
+}
+
+export const startUpdatePhoto = (file, setter) => {
+    return async (dispatch) => {
+        swalLoading('Actualizando Foto de Perfil', 'Por favor, espere');
+        const photoURL = await fileUpload(file);
+        const auth = getAuth();
+
+        dispatch(updateProfileInfo({photoURL}))
+        updateProfile(auth.currentUser, {photoURL})
+            .then(() => {
+                dispatch(updateProfileInfo({photoURL}));
+                Swal.close();
+                Swal.fire('Se ha actualizado la Foto de Perfil', '', 'success');
+                setter(false);
+            }).catch(err => {
+                Swal.fire('Error', err.message, 'error');
+            })
+    }
+}
+
+export const startUpdatePassword = (password, setter) => {
+    return () => {
+        const auth = getAuth();
+        swalLoading('Actualizando Contraseña', 'Por favor, espere');
+        updatePassword(auth.currentUser, password)
+            .then(() => {
+                Swal.close();
+                Swal.fire('Se ha actualizado la contraseña', '', 'success');
+                setter(false);
+            }).catch(err => {
+                Swal.fire('Error', err.message, 'error');
+            })
+    }
+}
+
+export const startDeleteAccount = () => {
+    return async (dispatch) => {
+        swalLoading('Eliminando Cuenta', 'Por favor, espere');
+
+        const auth = getAuth();
+
+        const projectsSnap = await getDocs(collection(db, auth.currentUser.uid, 'data', 'projects'));
+        
+        projectsSnap.docs.forEach(snap => {
+            deleteDoc(doc(db, auth.currentUser.uid, 'data', 'projects', snap.id))
+                .catch(err => Swal.fire('Error', err.message, 'error'));
+        });
+
+        deleteUser(auth.currentUser)
+            .then(() => {
+                dispatch(logout());
+                dispatch(cleanProjects());
+
+
+                Swal.close();
+            }).catch(err => {
+                Swal.fire('Error', err.message, 'error');
+            })
+    }
+}
+
 // Normal Actions
 
-export const login = (username, email, uid, photo, emailVerified) => ({
+export const login = (displayName, email, uid, photoURL, emailVerified) => ({
     type: types.login,
-    payload: {username, email, uid, photo, emailVerified}
+    payload: {displayName, email, uid, photoURL, emailVerified}
 });
 
 export const logout = () => ({
     type: types.logout
+});
+
+export const updateProfileInfo = (user) => ({
+    type: types.updateProfile,
+    payload: user
 });

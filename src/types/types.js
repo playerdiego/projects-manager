@@ -7,6 +7,7 @@ export const types = {
 
     login: '[Auth] Login',
     logout: '[Auth] Logout',
+    updateProfile: '[Auth] Update Profile',
 
     addProject : '[Project] Add Project',
     deleteProject : '[Project] Delete Project',

@@ -26,6 +26,7 @@
     border-radius: 50%;
     max-width: 100%;
     min-width: 300px;
+    min-height: 300px;
 }
 
 .account__profile-img i {
@@ -41,8 +42,17 @@
     box-shadow: inset -2px -2px 5px #FFF, inset 2px 2px 5px #a2a5b1;
 }
 
+.account__field i {
+    margin-left: 10px;
+}
+
 .account__field:hover i, .account__profile-img:hover i {
     opacity: 1;
+}
+
+.account__change-photo input {
+    display: inline-block;
+    width: auto;
 }
 
 @media only screen and(max-width: 992px) {

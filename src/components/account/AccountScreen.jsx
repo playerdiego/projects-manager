@@ -1,36 +1,56 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux'
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { closeSidebar } from '../../actions/uiActions';
 import { useForm } from '../../hooks/useForm';
 import { Form } from '../ui/Form';
 import ProfilePic from '../../assets/profile-pic.png';
 import { scrolltoTop } from '../../helpers/scrollToTop';
+import { startDeleteAccount, startUpdateEmail, startUpdateProfile } from '../../actions/authActions';
+import { getAuth } from '@firebase/auth';
+import { Delete } from '../ui/Delete';
+import { swalConfirm } from '../../helpers/swalConfirm';
+import { ChangePassword } from './ChangePassword';
+import { ChangePhoto } from './ChangePhoto';
 
 export const AccountScreen = () => {
 
-    const {username, email, photo} = useSelector(state => state.auth);
+    const dispatch = useDispatch();
 
-    const [userValues, handleInputChange] = useForm({username, email});
+    const auth = getAuth();
+    console.log(auth.currentUser.providerData[0].providerId);
 
+    const {displayName, email, photoURL} = useSelector(state => state.auth);
+
+    const [userValues, handleInputChange] = useForm({displayName, email});
+
+    const [editPhoto, setEditPhoto] = useState(false);
     const [editUser, setEditUser] = useState(false);
     const [editEmail, setEditEmail] = useState(false);
+    const [editPassword, setEditPassword] = useState(false);
 
     const history = useHistory();
 
-    const handleSubmit = (e) => {
+    const handleUpdateUsername = (e) => {
         e.preventDefault();
+        dispatch(startUpdateProfile({displayName: userValues.displayName}, setEditUser));
+    };
 
-        setEditUser(false);
-        setEditEmail(false);
+    const handleUpdateEmail = (e) => {
+        e.preventDefault();
+        dispatch(startUpdateEmail(userValues.email, setEditEmail))
     };
 
     const handleBack = () => {
         history.goBack();
     }
 
-    const dispatch = useDispatch();
+    const handleDeleteAccount = () => {
+        swalConfirm('¿Quieres eliminar tu cuenta?', 'Todos los datos se eliminarán', () => {
+            dispatch(startDeleteAccount());
+        });
+    }
 
     useEffect(() => {
         dispatch(closeSidebar());
@@ -50,61 +70,90 @@ export const AccountScreen = () => {
             </div>
 
             <div className="account__main">
-                <div className="account__profile-img">
-                    <img src={ photo ? photo :  ProfilePic} alt={userValues.username} />
-                    <i
-                        className={!editUser && !editEmail ? 'fas fa-pencil' : 'hidden'}
-                        >
-                    </i>
-                </div>
-
                 {
-                    !editUser
-                    ? (
-                        <div className="account__field">
-                            <strong>Username:</strong> {userValues.username}
+                    editPassword ? <ChangePassword setter={setEditPassword} />
+                    : (
+                        <>
+                        <div className="account__profile-img">
+                            <img src={ photoURL ? photoURL :  ProfilePic} alt={userValues.displayName} />
                             <i
                                 className={!editUser && !editEmail ? 'fas fa-pencil' : 'hidden'}
-                                onClick={() => setEditUser(true)}
+                                onClick={() => setEditPhoto(true)}
                                 >
                             </i>
                         </div>
-                    )
-                    : (
-                        <Form
-                            className='password__form'
-                            handleSubmit={handleSubmit}
-                            handleInputChange={handleInputChange}
-                            name='username'
-                            value={userValues.username}
-                            setter={setEditUser}
-                            />
+                        {
+                            editPhoto && <ChangePhoto setter={setEditPhoto} />
+                        }
+
+                        
+
+                        {
+                            !editUser
+                            ? (
+                                <div className="account__field">
+                                    <strong>Username:</strong> {userValues.displayName}
+                                    <i
+                                        className={!editUser && !editEmail && !editPhoto ? 'fas fa-pencil' : 'hidden'}
+                                        onClick={() => setEditUser(true)}
+                                        >
+                                    </i>
+                                </div>
+                            )
+                            : (
+                                <Form
+                                    className='password__form'
+                                    handleSubmit={handleUpdateUsername}
+                                    handleInputChange={handleInputChange}
+                                    name='displayName'
+                                    value={userValues.displayName}
+                                    setter={setEditUser}
+                                    />
+                            )
+                        }
+
+                        {
+                            !editEmail
+                            ? (
+                                <div className="account__field">
+                                    <strong>Email:</strong> {email}
+                                    {
+                                        auth.currentUser.providerData[0].providerId === 'password' ?
+                                        (
+                                            <i
+                                            className={!editUser && !editEmail && !editPhoto ? 'fas fa-pencil' : 'hidden'}
+                                            onClick={() => setEditEmail(true)}
+                                            ></i>
+                                        ) : auth.currentUser.providerData[0].providerId === 'google.com' ? (
+                                            <i className='fab fa-google'></i>
+                                        ) : (
+                                            <i className='fab fa-github'></i>
+                                        )
+                                    }
+                                </div>
+                            )
+                            : (
+                                <Form
+                                    className='password__form'
+                                    handleSubmit={handleUpdateEmail}
+                                    handleInputChange={handleInputChange}
+                                    name='email'
+                                    value={userValues.email}
+                                    setter={setEditEmail}
+                                    />
+                            )
+                        }
+
+                        {
+                            auth.currentUser.providerData[0].providerId === 'password' &&
+                            <button onClick={() => setEditPassword(true)}>Cambiar Contraseña <i className="fas fa-unlock-alt"></i></button>
+                        }
+
+                        </>
                     )
                 }
 
-                {
-                    !editEmail
-                    ? (
-                        <div className="account__field">
-                            <strong>Email:</strong> {userValues.email}
-                            <i
-                                className={!editUser && !editEmail ? 'fas fa-pencil' : 'hidden'}
-                                onClick={() => setEditEmail(true)}
-                                ></i>
-                        </div>
-                    )
-                    : (
-                        <Form
-                            className='password__form'
-                            handleSubmit={handleSubmit}
-                            handleInputChange={handleInputChange}
-                            name='email'
-                            value={userValues.email}
-                            setter={setEditEmail}
-                            />
-                    )
-                }
-                <Link to='/auth/recover'>Cambiar Contraseña <i className="fas fa-unlock-alt"></i></Link>
+                <Delete action={handleDeleteAccount} />
             </div>
         </>
     )

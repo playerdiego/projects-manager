@@ -14,7 +14,7 @@ export const Header = () => {
 
     const {open} = useSelector(state => state.ui);
     const {email} = useSelector(state => state.auth);
-    const {username, photo, emailVerified} = useSelector(state => state.auth);
+    const {displayName, photoURL, emailVerified} = useSelector(state => state.auth);
 
     const dispatch = useDispatch();
 
@@ -51,14 +51,14 @@ export const Header = () => {
                 {
                     !emailVerified &&
                     <span className='header__verify' onClick={handleResendEmail}>
-                        Verifica tu correo <i class="fas fa-exclamation-circle"></i>
+                        Verifica tu correo <i className="fas fa-exclamation-circle"></i>
                     </span>
                 }
 
                 <Link to='/account' className='header__user'>
-                    Hola! {username}
+                    Hola! {displayName}
                     <div className="dashboard__header_img">
-                        <img src={photo ? photo : ProfilePic} alt={username} />
+                        <img src={photoURL ? photoURL : ProfilePic} alt={displayName} />
                     </div>
                 </Link>
                 <span className='header__logout' onClick={handleLogout}><i className='fas fa-sign-out-alt'></i> <span>Cerrar Sesión</span></span>

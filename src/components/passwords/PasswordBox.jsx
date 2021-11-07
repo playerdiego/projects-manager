@@ -8,8 +8,6 @@ import CryptoJS from 'crypto-js';
 
 export const PasswordBox = ({title, url, username, password, id, projectID}) => {
 
-    const key = 'cosmos';
-
     const dispatch = useDispatch();
 
     const [showPass, setShowPass] = useState(false);
@@ -48,7 +46,7 @@ export const PasswordBox = ({title, url, username, password, id, projectID}) => 
             title: passwordValues.title,
             url: passwordValues.url,
             username: passwordValues.username,
-            password: CryptoJS.AES.encrypt(passwordValues.password, key).toString()
+            password: CryptoJS.AES.encrypt(passwordValues.password, 'cosmos').toString()
         }))
 
         setEditTitle(false);
