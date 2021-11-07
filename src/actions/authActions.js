@@ -1,10 +1,10 @@
 import { createUserWithEmailAndPassword, deleteUser, getAuth, sendEmailVerification, signInWithEmailAndPassword, signOut, updateEmail, updatePassword, updateProfile } from "@firebase/auth";
 import { collection, deleteDoc, doc, getDocs } from "@firebase/firestore";
+import { getDownloadURL, ref, uploadBytesResumable } from "@firebase/storage";
 import Swal from "sweetalert2";
-import { db, githubAuthProvider, googleAuthProvider } from "../firesbase/firebase-config";
+import { db, githubAuthProvider, googleAuthProvider, storage } from "../firesbase/firebase-config";
 import { signInPopup } from "../helpers/signInPopup";
 import { swalLoading } from "../helpers/swalLoading";
-import { fileUpload } from "../helpers/uploadFile";
 import { types } from "../types/types";
 import { cleanProjects } from "./projectsActions";
 
@@ -81,12 +81,15 @@ export const startLogout = () => {
     }
 }
 
+// Updates
+
 export const startUpdateProfile = (user, setter) => {
     return (dispatch) => {
 
         swalLoading('Actualizando Perfil', 'Por favor, espere');
 
         const auth = getAuth();
+
         updateProfile(auth.currentUser, user)
             .then(() => {
                 dispatch(updateProfileInfo(user));
@@ -99,7 +102,7 @@ export const startUpdateProfile = (user, setter) => {
     }
 }
 
-export const startUpdateEmail = (email, setter) => {
+export const startUpdateEmail = (email, setter, setReAuth) => {
     return (disptach) => {
         swalLoading('Actualizando Email', 'Por favor, espere');
         const auth = getAuth();
@@ -109,21 +112,30 @@ export const startUpdateEmail = (email, setter) => {
                 disptach(updateProfileInfo({email}));
                 Swal.close();
                 setter(false);
+                setReAuth({status: false, action: null});
                 sendEmailVerification(auth.currentUser)
                 .then(() => {
                     Swal.fire('Se ha enviado el enlace de verificación', `Revisa tu correo ${email}`, 'success');
                 });
             }).catch(err => {
                 Swal.fire('Error', err.message, 'error');
+                setReAuth({status: false, action: null});
             })
     }
 }
 
 export const startUpdatePhoto = (file, setter) => {
     return async (dispatch) => {
-        swalLoading('Actualizando Foto de Perfil', 'Por favor, espere');
-        const photoURL = await fileUpload(file);
+        
         const auth = getAuth();
+
+        swalLoading('Actualizando Foto de Perfil', 'Por favor, espere');
+        const imageRef = ref(storage, 'profilePictures/' + auth.currentUser.displayName);
+
+        const snapshot = await uploadBytesResumable(imageRef, file);
+        const photoURL = await getDownloadURL(snapshot.ref);
+
+
 
         dispatch(updateProfileInfo({photoURL}))
         updateProfile(auth.currentUser, {photoURL})

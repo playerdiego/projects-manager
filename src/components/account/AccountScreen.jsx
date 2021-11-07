@@ -13,6 +13,7 @@ import { Delete } from '../ui/Delete';
 import { swalConfirm } from '../../helpers/swalConfirm';
 import { ChangePassword } from './ChangePassword';
 import { ChangePhoto } from './ChangePhoto';
+import { ReAuth } from './ReAuth';
 
 export const AccountScreen = () => {
 
@@ -30,6 +31,11 @@ export const AccountScreen = () => {
     const [editEmail, setEditEmail] = useState(false);
     const [editPassword, setEditPassword] = useState(false);
 
+    const [reAuth, setReAuth] = useState({
+        status: false,
+        action: null
+    });
+
     const history = useHistory();
 
     const handleUpdateUsername = (e) => {
@@ -39,7 +45,11 @@ export const AccountScreen = () => {
 
     const handleUpdateEmail = (e) => {
         e.preventDefault();
-        dispatch(startUpdateEmail(userValues.email, setEditEmail))
+
+        setReAuth({
+            status: true,
+            action: () => dispatch(startUpdateEmail(userValues.email, setEditEmail, setReAuth))
+        });
     };
 
     const handleBack = () => {
@@ -48,7 +58,10 @@ export const AccountScreen = () => {
 
     const handleDeleteAccount = () => {
         swalConfirm('¿Quieres eliminar tu cuenta?', 'Todos los datos se eliminarán', () => {
-            dispatch(startDeleteAccount());
+            setReAuth({
+                status: true,
+                action: () => dispatch(startDeleteAccount())
+            });
         });
     }
 
@@ -71,6 +84,7 @@ export const AccountScreen = () => {
 
             <div className="account__main">
                 {
+                    reAuth.status ? <ReAuth action={reAuth.action} setter={setReAuth} /> :
                     editPassword ? <ChangePassword setter={setEditPassword} />
                     : (
                         <>
@@ -149,11 +163,11 @@ export const AccountScreen = () => {
                             <button onClick={() => setEditPassword(true)}>Cambiar Contraseña <i className="fas fa-unlock-alt"></i></button>
                         }
 
+                        <Delete action={() => handleDeleteAccount()} />
                         </>
                     )
                 }
 
-                <Delete action={handleDeleteAccount} />
             </div>
         </>
     )
