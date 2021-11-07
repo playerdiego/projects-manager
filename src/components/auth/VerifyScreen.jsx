@@ -35,7 +35,7 @@ export const VerifiyScreen = ({code}) => {
                     error: true
                 });
             })
-    }, [auth, code])
+    }, [auth, code, dispatch])
 
     return (
         <div className="auth__container">
