@@ -17,7 +17,9 @@ import { ReAuth } from './ReAuth';
 
 export const AccountScreen = () => {
 
+
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const auth = getAuth();
     auth.languageCode = 'es';
@@ -36,7 +38,10 @@ export const AccountScreen = () => {
         action: null
     });
 
-    const history = useHistory();
+    useEffect(() => {
+        dispatch(closeSidebar());
+        scrolltoTop();
+    }, [dispatch]);
 
     const handleUpdateUsername = (e) => {
         e.preventDefault();
@@ -64,11 +69,6 @@ export const AccountScreen = () => {
             });
         });
     }
-
-    useEffect(() => {
-        dispatch(closeSidebar());
-        scrolltoTop();
-    }, [dispatch]);
 
     return (
         <>

@@ -10,6 +10,7 @@ import { swalLoading } from '../../helpers/swalLoading';
 export const ReAuth = ({action, setter}) => {
 
     const auth= getAuth();
+    auth.languageCode = 'es';
 
     const [{password}, handleInputChange, reset] = useForm({
         password: ''

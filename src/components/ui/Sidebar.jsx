@@ -6,8 +6,9 @@ import { swalConfirm } from '../../helpers/swalConfirm';
 
 export const Sidebar = () => {
 
-    const {open} = useSelector(state => state.ui);
     const dispatch = useDispatch();
+    
+    const {open} = useSelector(state => state.ui);
 
     const handleLogout = () => {
         swalConfirm('¿Seguro que quieres cerrar sesión?', '', () => dispatch(startLogout()))

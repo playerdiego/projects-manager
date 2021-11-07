@@ -10,10 +10,11 @@ import { swalConfirm } from '../../helpers/swalConfirm'
 export const ProjectBox = ({name, budget, paid, closed, id, passwordsPanel}) => {
 
     const dispatch = useDispatch();
+    const auth = getAuth();
+    auth.languageCode = 'es';
 
     const [tasksLength, setTasksLength] = useState(0);
 
-    const auth = getAuth();
 
     useEffect(() => {
         const getTasks = async () => {

@@ -13,8 +13,8 @@ import 'firebase/compat/auth';
 export const ChangePassword = ({setter}) => {
 
     const dispatch = useDispatch();
-    
     const auth = getAuth();
+    auth.languageCode = 'es';
 
     const [{currentPassword, password, passwordConfirm}, handleInputChange, reset] = useForm({
         currentPassword: '',

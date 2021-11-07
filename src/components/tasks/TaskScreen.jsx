@@ -16,17 +16,17 @@ import { useHistory } from 'react-router';
 
 export const TaskScreen = ({match: {params: {taskID, projectID}}}) => {
 
-    const tasks = useSelector(state => state.tasks);
-    const projects = useSelector(state => state.projects);
-
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const tasks = useSelector(state => state.tasks);
+    const projects = useSelector(state => state.projects);
+
+
     const [task, setTask] = useState(null);
     const [project, setProject] = useState(null);
-    
     const [desc, setDesc] = useState('');
-
+    
     const editorRef = useRef(Editor);
 
     useEffect(() => {
@@ -49,7 +49,12 @@ export const TaskScreen = ({match: {params: {taskID, projectID}}}) => {
         if(task) {
             setDesc(task.desc);
         }
-    }, [task])
+    }, [task]);
+
+    useEffect(() => {
+        dispatch(closeSidebar());
+        scrolltoTop();
+    }, [dispatch]);
 
     const handleEditChange = () => {
         setDesc(editorRef.current.getContent());
@@ -60,11 +65,6 @@ export const TaskScreen = ({match: {params: {taskID, projectID}}}) => {
             desc: editorRef.current.getContent()
         }));
     }
-
-    useEffect(() => {
-        dispatch(closeSidebar());
-        scrolltoTop();
-    }, [dispatch]);
 
     const handleDeleteTask = () => {
         swalConfirm('¿Seguro que quieres eliminar la Tarea? Se borrarán todos los datos', 'Se ha eliminado la Tarea', () => {

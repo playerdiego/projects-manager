@@ -7,19 +7,20 @@ import { scrolltoTop } from '../../helpers/scrollToTop';
 
 export const BalanceScreen = ({history}) => {
 
-    const projects = useSelector(state => state.projects);
-
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(closeSidebar());
-        scrolltoTop();
-    }, [dispatch]);
+    const projects = useSelector(state => state.projects);
 
     const [{budget, paid}, setProjectsData] = useState({
         budget: 0,
         paid: 0,
     });
+
+
+    useEffect(() => {
+        dispatch(closeSidebar());
+        scrolltoTop();
+    }, [dispatch]);
 
     useEffect(() => {
         setProjectsData({
@@ -27,6 +28,7 @@ export const BalanceScreen = ({history}) => {
             paid: getProjectsPaid(projects),
         });
     }, [projects]);
+
 
     const handleSelectProject = (project) => {
         history.push(`/project/${project.id}`)

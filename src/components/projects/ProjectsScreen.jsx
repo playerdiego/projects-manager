@@ -8,10 +8,11 @@ import { useSelector } from 'react-redux';
 
 export const ProjectsScreen = () => {
 
+    const dispatch = useDispatch();
+    
     const projects = useSelector(state => state.projects);
     const {loading} = useSelector(state => state.ui);
 
-    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(closeSidebar());

@@ -11,9 +11,7 @@ export const PasswordBox = ({title, url, username, password, id, projectID}) => 
     const dispatch = useDispatch();
 
     const [showPass, setShowPass] = useState(false);
-    
     const [hiddenPass, setHiddenPass] = useState('');
-
 
     const [editTitle, setEditTitle] = useState(false);
     const [editURL, setEditURL] = useState(false);

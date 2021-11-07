@@ -11,12 +11,13 @@ import Swal from 'sweetalert2';
 
 export const TaskHeader = ({task, project, desc}) => {
 
+    const dispatch = useDispatch();
+    const history = useHistory();
+    
     const [editTitle, setEditTitle] = useState(false);
     const [addDeadLine, setAddDeadLine] = useState(false);
     const [date, setDate] = useState(new Date());
 
-    const dispatch = useDispatch();
-    const history = useHistory();
     
     const [{title}, handleInputChange] = useForm({
         ...task

@@ -10,10 +10,11 @@ import { startDeleteAllPasswords } from '../../actions/passwordsActions';
 
 export const ProjectHeader = ({project}) => {
 
+    const dispatch = useDispatch();
+    
     const [editTitle, setEditTitle] = useState(false);
     const [editBudget, setEditBudget] = useState(false);
 
-    const dispatch = useDispatch();
     
     const [{name, budget, paid, passwordsPanel}, handleInputChange] = useForm({
         ...project

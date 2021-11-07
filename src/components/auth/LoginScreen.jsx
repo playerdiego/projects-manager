@@ -8,14 +8,16 @@ import { SocialAuth } from './SocialAuth';
 
 export const LoginScreen = () => {
 
-    const [error, setError] = useState(false);
+    const dispatch = useDispatch();
 
+    
     const [{email, password}, handleInputChange, reset] = useForm({
         email: '',
         password: ''
     });
+    
+    const [error, setError] = useState(false);
 
-    const dispatch = useDispatch();
 
     const handleLogin = (e) => {
         e.preventDefault();

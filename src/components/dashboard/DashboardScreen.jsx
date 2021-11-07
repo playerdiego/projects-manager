@@ -9,10 +9,11 @@ import Boxes from './Boxes';
 
 export const DashboardScreen = () => {
 
+    const dispatch = useDispatch();
+    
     const projects = useSelector(state => state.projects);
     const {loading} = useSelector(state => state.ui);
 
-    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(closeSidebar());

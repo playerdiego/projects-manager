@@ -10,9 +10,7 @@ export const DeadLine = ({deadLine, id, projectID}) => {
     const dispatch = useDispatch();
 
     const [editDeadLine, setEditDeadLine] = useState(false);
-    
     const [date, setDate] = useState(new Date(deadLine));
-    
     const [remaining, setRemaining] = useState(Math.round((date.getTime() - new Date().getTime()) / (1000*60*60*24)));
     
     useEffect(() => {

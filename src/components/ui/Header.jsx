@@ -12,12 +12,11 @@ import { swalLoading } from '../../helpers/swalLoading';
 
 export const Header = () => {
 
+    const dispatch = useDispatch();
+
     const {open} = useSelector(state => state.ui);
     const {email} = useSelector(state => state.auth);
     const {displayName, photoURL, emailVerified} = useSelector(state => state.auth);
-
-    const dispatch = useDispatch();
-
     
     const handleToggle = () => {
         open ? dispatch(closeSidebar()) : dispatch(openSiderbar());

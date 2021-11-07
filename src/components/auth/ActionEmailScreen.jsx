@@ -9,8 +9,6 @@ export const ActionEmailScreen = ({location}) => {
     
     const params = queryString.parse( location.search );
 
-    console.log(params);
-
     if(!params.mode) {
         return <Redirect to='/' />
     }

@@ -20,16 +20,18 @@ import { cleanPasswords, startLoadPasswords } from '../../actions/passwordsActio
 
 export const Project = ({match: {params: {projectID}}}) => {
 
-    const [addTask, setAddTask] = useState(false);
-    const [project, setProject] = useState(null);
+    const history = useHistory();
+    const dispatch = useDispatch();
 
+    const projects = useSelector(state => state.projects);
     const tasks = useSelector(state => state.tasks);
     const passwords = useSelector(state => state.passwords);
     const {loading} = useSelector(state => state.ui);
+
+    const [addTask, setAddTask] = useState(false);
+    const [project, setProject] = useState(null);
+
     
-    const history = useHistory()
-    const projects = useSelector(state => state.projects);
-    const dispatch = useDispatch();
 
     useEffect(() => {
         const auth = getAuth();

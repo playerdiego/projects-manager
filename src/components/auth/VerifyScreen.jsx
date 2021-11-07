@@ -5,14 +5,14 @@ import { applyActionCode, getAuth } from "firebase/auth";
 
 export const VerifiyScreen = ({code}) => {
 
+    const auth = getAuth();
+    auth.languageCode = 'es';
+
     const [message, setMessage] = useState({
         title: '...',
         text: '...',
         error: false
     });
-
-    const auth = getAuth();
-    auth.languageCode = 'es';
     
     useEffect(() => {
         applyActionCode(auth, code)
