@@ -111,15 +111,16 @@ export const AddProjectForm = ({setAddProject}) => {
                 <div className='password__buttons'>
                     <button
                         className='btn'
-                        onClick={() => setAddProject(false)}>
-                            Cancelar <i className='fas fa-times'></i>
-                    </button>
-                    <button
-                        className='btn'
-                        type='submit'>
+                        type='submit'
+                        >
 
                         Añadir <i className='fas fa-plus'></i>
                         
+                    </button>
+                    <button
+                        className='btn'
+                        onClick={() => setAddProject(false)}>
+                            Cancelar <i className='fas fa-times'></i>
                     </button>
                 </div>
             </form>

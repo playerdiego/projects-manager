@@ -31,8 +31,8 @@ export const startAddProject = (project) => {
         swalLoading('Se esta añadiendo el Proyecto', 'Por favor, espere');
         addDoc(collection(db, auth.currentUser.uid, 'data', 'projects'), project)
             .then(projectRef => {
-                Swal.fire(`Se ha Agregado el proyecto`, '', 'success');
                 Swal.close();
+                Swal.fire(`Se ha Agregado el proyecto`, '', 'success');
                 const createdProject = {
                     ...project,
                     id: projectRef.id
