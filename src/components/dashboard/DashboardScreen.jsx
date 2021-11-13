@@ -5,7 +5,7 @@ import { closeSidebar } from '../../actions/uiActions';
 import { scrolltoTop } from '../../helpers/scrollToTop';
 import { AddProjectBox } from '../projects/AddProjectBox';
 import { ProjectBox } from '../projects/ProjectBox';
-import Boxes from './Boxes';
+import {Boxes} from './Boxes';
 
 export const DashboardScreen = () => {
 

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProjectsBudget, getProjectsPaid } from '../../helpers/getProjectsInfo';
 
-export default function Boxes() {
+export const Boxes = () => {
 
     const projects = useSelector(state => state.projects);
 
