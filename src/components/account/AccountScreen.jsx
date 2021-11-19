@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { closeSidebar } from '../../actions/uiActions';
 import { useForm } from '../../hooks/useForm';
 import { Form } from '../ui/Form';
@@ -19,8 +19,7 @@ export const AccountScreen = () => {
 
 
     const dispatch = useDispatch();
-    const history = useHistory();
-
+    const navigate = useNavigate();
     const auth = getAuth();
     auth.languageCode = 'es';
     
@@ -58,7 +57,7 @@ export const AccountScreen = () => {
     };
 
     const handleBack = () => {
-        history.goBack();
+        navigate(-1);
     }
 
     const handleDeleteAccount = () => {

@@ -23,7 +23,9 @@ export const ProjectBox = ({name, budget, paid, closed, id, passwordsPanel}) => 
             setTasksLength(tasksSnap.docs.length);
         }
         getTasks();
-    }, [id, auth.currentUser.uid])
+
+        // eslint-disable-next-line
+    }, []);
 
     const handleDeleteProject = () => {
         swalConfirm('¿Seguro que quieres eliminar el Proyecto? Se borrarán todos los datos', 'Se ha eliminado el proyecto', () => {

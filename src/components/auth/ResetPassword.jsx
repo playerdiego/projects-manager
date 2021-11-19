@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useForm } from '../../hooks/useForm';
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { swalLoading } from '../../helpers/swalLoading';
 
 export const ResetPassword = ({code}) => {
@@ -16,7 +16,7 @@ export const ResetPassword = ({code}) => {
         passwordConfirm: '',
     });
 
-    const history = useHistory();
+    const navigate = useNavigate();
     const auth = getAuth();
     auth.languageCode = 'es';
 
@@ -41,7 +41,7 @@ export const ResetPassword = ({code}) => {
                 .then(() => {
                     Swal.close();
                     Swal.fire('Se ha cambiado la contraseña', '', 'success');
-                    history.replace('/');
+                    navigate('/', {replace: true});
                 })
                 .catch(err => {
                     Swal.fire('Error', err, 'error');

@@ -1,7 +1,7 @@
 import { getAuth, onAuthStateChanged } from '@firebase/auth'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { login } from '../actions/authActions'
 import { startLoadProjects } from '../actions/projectsActions'
 import { ActionEmailScreen } from '../components/auth/ActionEmailScreen'
@@ -10,13 +10,12 @@ import { AuthRouter } from './AuthRouter'
 import { DashboradRouter } from './DashboradRouter'
 import { PrivateRouter } from './PrivateRouter'
 import { PublicRouter } from './PublicRouter'
-import { Route } from 'react-router'
+import { Route, Routes } from 'react-router'
 
 
 export const AppRouter = () => {
 
     const [cheking, setCheking] = useState(true);
-    const [isAuth, setIsAuth] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -25,12 +24,10 @@ export const AppRouter = () => {
         onAuthStateChanged(auth, async (user) => {
             if(user) {
                 dispatch(login(user.displayName, user.email, user.uid, user.photoURL, user.emailVerified));
-                setIsAuth(true);
 
                 dispatch(startLoadProjects(user.uid));
 
             } else {
-                setIsAuth(false);
             }
             setCheking(false);
         });
@@ -42,19 +39,27 @@ export const AppRouter = () => {
     }
 
     return (
-        <Router>
-            <Switch>
+        <BrowserRouter>
+            <Routes>
 
 
-                <Route exact path='/auth/action' component={ActionEmailScreen} />
-                <PublicRouter path='/auth' component={AuthRouter} isAuth={isAuth} />
+                <Route path='/auth/action' element={<ActionEmailScreen />} />
 
+                <Route path='/auth/*' element={
+                    <PublicRouter>
+                        <AuthRouter />
+                    </PublicRouter>
+                } />
 
-                <PrivateRouter path='/' component={DashboradRouter} isAuth={isAuth} />
+                <Route path='/*' element={
+                    <PrivateRouter>
+                        <DashboradRouter />
+                    </PrivateRouter>
+                } />
 
-
-                <Redirect to='/auth' />
-            </Switch>
-        </Router>
+                
+                {/* <Route path='/' element={ <Navigate to='/auth' /> } /> */}
+            </Routes>
+        </BrowserRouter>
     )
 }

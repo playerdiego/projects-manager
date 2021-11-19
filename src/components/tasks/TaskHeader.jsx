@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useForm } from '../../hooks/useForm';
 import { Form } from '../ui/Form';
 import { DeadLine } from './DeadLine';
@@ -12,8 +12,8 @@ import Swal from 'sweetalert2';
 export const TaskHeader = ({task, project, desc}) => {
 
     const dispatch = useDispatch();
-    const history = useHistory();
-    
+    const navigate = useNavigate();
+
     const [editTitle, setEditTitle] = useState(false);
     const [addDeadLine, setAddDeadLine] = useState(false);
     const [date, setDate] = useState(new Date());
@@ -74,16 +74,16 @@ export const TaskHeader = ({task, project, desc}) => {
                         desc
                     }));
 
-                    history.goBack(`/project/${project.id}`);
+                    navigate(`/project/${project.id}`);
                     
                 } else if(result.isDenied) {
-                    history.goBack(`/project/${project.id}`);
+                    navigate(`/project/${project.id}`);
                 } 
 
                 
                 })
         } else {
-            history.goBack(`/project/${project.id}`);
+            navigate(`/project/${project.id}`);
         }
     }
 

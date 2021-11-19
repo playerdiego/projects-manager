@@ -3,14 +3,15 @@ import queryString from 'query-string';
 import { ResetPassword } from './ResetPassword';
 import { RecoverEmail } from './RecoverEmail';
 import { VerifiyScreen } from './VerifyScreen';
-import { Redirect } from 'react-router';
+import { Navigate, useLocation } from 'react-router';
 
-export const ActionEmailScreen = ({location}) => {
-    
+export const ActionEmailScreen = () => {
+
+    const location = useLocation();
     const params = queryString.parse( location.search );
 
     if(!params.mode) {
-        return <Redirect to='/' />
+        return <Navigate to='/' />
     }
     
     return (

@@ -12,12 +12,15 @@ import { scrolltoTop } from '../../helpers/scrollToTop';
 import { Loading } from '../ui/Loading';
 import { cleanTasks, startDeleteTask, startLoadTasks, startUpdateTask } from '../../actions/tasksActions';
 import { getAuth } from '@firebase/auth';
-import { useHistory } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
-export const TaskScreen = ({match: {params: {taskID, projectID}}}) => {
+export const TaskScreen = () => {
+
+    const params = useParams();
+    const {taskID, projectID} = params;
 
     const dispatch = useDispatch();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const tasks = useSelector(state => state.tasks);
     const projects = useSelector(state => state.projects);
@@ -69,7 +72,7 @@ export const TaskScreen = ({match: {params: {taskID, projectID}}}) => {
     const handleDeleteTask = () => {
         swalConfirm('¿Seguro que quieres eliminar la Tarea? Se borrarán todos los datos', 'Se ha eliminado la Tarea', () => {
             dispatch(startDeleteTask(projectID, taskID));
-            history.replace(`/project/${projectID}`);
+            navigate(`/project/${projectID}`, {replace: true});
         });
     }
 

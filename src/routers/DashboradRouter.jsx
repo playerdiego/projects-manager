@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Redirect, Route, Switch } from 'react-router'
+import { Navigate, Route, Routes } from 'react-router'
 import { AccountScreen } from '../components/account/AccountScreen'
 import { BalanceScreen } from '../components/balance/BalanceScreen'
 import { DashboardScreen } from '../components/dashboard/DashboardScreen'
@@ -19,16 +19,17 @@ export const DashboradRouter = () => {
             <Header />
             <Sidebar />
             <div className={open ? 'main__container open' : 'main__container'}>
-                <Switch>
-                    <Route path='/projects' component={ProjectsScreen}  />
-                    <Route exact path='/project/:projectID' component={Project} />
-                    <Route exact path='/project/:projectID/task/:taskID' component={TaskScreen} />
-                    <Route path='/payments-balance' component={BalanceScreen}  />
-                    <Route path='/account' component={AccountScreen}  />
-                    <Route exact path='/' component={DashboardScreen}  />
+                <Routes>
+                    <Route path='*' element={<Navigate to='/' />} />
 
-                    <Redirect to='/' />
-                </Switch>
+                    <Route path='/projects' element={<ProjectsScreen/>}  />
+                    <Route end path='/project/:projectID' element={<Project/>} />
+                    <Route end path='/project/:projectID/task/:taskID' element={<TaskScreen/>} />
+                    <Route path='/payments-balance' element={<BalanceScreen />}  />
+                    <Route path='/account' element={<AccountScreen/>}  />
+                    <Route end path='/' element={<DashboardScreen/>}  />
+
+                </Routes>
             </div>
             <Footer />
         </div>            

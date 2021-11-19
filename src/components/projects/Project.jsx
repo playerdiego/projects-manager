@@ -13,14 +13,18 @@ import { useSelector } from 'react-redux';
 import { scrolltoTop } from '../../helpers/scrollToTop';
 import { Loading } from '../ui/Loading';
 import { startDeleteProject } from '../../actions/projectsActions';
-import { useHistory } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { getAuth } from '@firebase/auth';
 import { cleanTasks, startAddTask, startLoadTasks } from '../../actions/tasksActions';
 import { cleanPasswords, startLoadPasswords } from '../../actions/passwordsActions';
 
-export const Project = ({match: {params: {projectID}}}) => {
+export const Project = () => {
 
-    const history = useHistory();
+
+    const params = useParams();
+    const {projectID} = params;
+
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const projects = useSelector(state => state.projects);
@@ -83,7 +87,7 @@ export const Project = ({match: {params: {projectID}}}) => {
     const handleDeleteProject = () => {
         swalConfirm('¿Seguro que quieres eliminar el Proyecto? Se borrarán todos los datos', 'Se ha eliminado el proyecto', () => {
             dispatch(startDeleteProject(project.id));
-            history.replace('/projects')
+            navigate('/projects', {replace: true});
         });
 
     }
