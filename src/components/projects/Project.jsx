@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import { scrolltoTop } from '../../helpers/scrollToTop';
 import { Loading } from '../ui/Loading';
 import { startDeleteProject } from '../../actions/projectsActions';
-import { useNavigate, useParams } from 'react-router';
+import { Navigate, useNavigate, useParams } from 'react-router';
 import { getAuth } from '@firebase/auth';
 import { cleanTasks, startAddTask, startLoadTasks } from '../../actions/tasksActions';
 import { cleanPasswords, startLoadPasswords } from '../../actions/passwordsActions';
@@ -53,9 +53,9 @@ export const Project = () => {
     
     useEffect(() => {
         if(projects.length > 0) {
-            setProject(getProjectById(projectID, projects))
+            setProject(getProjectById(projectID, projects));
         }
-    }, [projects, projectID])
+    }, [projects, projectID]);
 
 
     const [{taskName}, handleInputChange, reset] = useForm({
@@ -94,6 +94,10 @@ export const Project = () => {
 
     if(project === null) {
         return <Loading />
+    }
+
+    if(!project) {
+        return <Navigate to='/' />
     }
 
     return (

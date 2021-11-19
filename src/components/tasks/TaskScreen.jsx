@@ -12,7 +12,7 @@ import { scrolltoTop } from '../../helpers/scrollToTop';
 import { Loading } from '../ui/Loading';
 import { cleanTasks, startDeleteTask, startLoadTasks, startUpdateTask } from '../../actions/tasksActions';
 import { getAuth } from '@firebase/auth';
-import { useNavigate, useParams } from 'react-router';
+import { Navigate, useNavigate, useParams } from 'react-router';
 
 export const TaskScreen = () => {
 
@@ -42,9 +42,9 @@ export const TaskScreen = () => {
     }, [dispatch, projectID])
 
     useEffect(() => {
+        setProject(getProjectById(projectID, projects));
         if(tasks.length > 0) {
             setTask(getTaskById(taskID, tasks));
-            setProject(getProjectById(projectID, projects));
         }
     }, [tasks, taskID, projectID, projects]);
 
@@ -77,8 +77,15 @@ export const TaskScreen = () => {
     }
 
     if (task === null) {
-        return <Loading />
+        if(project === undefined) {
+            return <Navigate to='/' />
+        } else {
+            return <Loading />
+        }
     }
+
+
+    
 
     return (
         <>
