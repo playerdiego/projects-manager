@@ -44,7 +44,7 @@ export const PasswordBox = ({title, url, username, password, id, projectID}) => 
             title: passwordValues.title,
             url: passwordValues.url,
             username: passwordValues.username,
-            password: CryptoJS.AES.encrypt(passwordValues.password, 'cosmos').toString()
+            password: CryptoJS.AES.encrypt(passwordValues.password, process.env.REACT_APP_SECRET_WORD).toString()
         }))
 
         setEditTitle(false);

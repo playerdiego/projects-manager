@@ -9,7 +9,7 @@ import CryptoJS from 'crypto-js';
 
 export const startLoadPasswords = (uid, projectID) => {
     return async (dispatch) => {
-        
+
         dispatch(startLoading());
         const passwordsSnap = await getDocs(query(collection(db, uid, 'data', 'projects', projectID, 'passwords'), orderBy('date', 'desc')));
         const passwords = [];
@@ -17,7 +17,7 @@ export const startLoadPasswords = (uid, projectID) => {
         passwordsSnap.docs.forEach(snap => {
             passwords.push({
                 ...snap.data(),
-                password: CryptoJS.AES.decrypt(snap.data().password, 'cosmos').toString(CryptoJS.enc.Utf8),
+                password: CryptoJS.AES.decrypt(snap.data().password, process.env.REACT_APP_SECRET_WORD).toString(CryptoJS.enc.Utf8),
                 id: snap.id
             });
         });
@@ -38,7 +38,7 @@ export const startAddPassword = (projectID, password) => {
                 
                 const newPassword = {
                     ...password,
-                    password: CryptoJS.AES.decrypt(password.password, 'cosmos').toString(CryptoJS.enc.Utf8),
+                    password: CryptoJS.AES.decrypt(password.password, process.env.REACT_APP_SECRET_WORD).toString(CryptoJS.enc.Utf8),
                     id: passwordRef.id
                 }
 

@@ -26,7 +26,7 @@ export const NewPassword = ({projectID}) => {
                 title,
                 url,
                 username,
-                password: CryptoJS.AES.encrypt(password, 'cosmos').toString(),
+                password: CryptoJS.AES.encrypt(password, process.env.REACT_APP_SECRET_WORD).toString(),
                 date: new Date()
             }));
             setAddPassword(false);
@@ -93,15 +93,15 @@ export const NewPassword = ({projectID}) => {
                         <div className='password__buttons'>
                             <button
                                 className='btn'
-                                onClick={() => setAddPassword(false)}>
-                                    Cancelar <i className='fas fa-times'></i>
-                            </button>
-                            <button
-                                className='btn'
                                 type='submit'>
 
                                 Añadir <i className='fas fa-plus'></i>
                                 
+                            </button>
+                            <button
+                                className='btn'
+                                onClick={() => setAddPassword(false)}>
+                                    Cancelar <i className='fas fa-times'></i>
                             </button>
                         </div>
                     </form>
